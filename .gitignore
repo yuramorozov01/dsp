@@ -1,0 +1,16 @@
+.DS_Store
+
+venv/
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+.idea/
+
+.env
+
+uploads/
+
+.pytest_cache/
+.coverage
