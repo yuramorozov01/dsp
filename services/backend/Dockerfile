@@ -14,8 +14,6 @@ ARG DOCKER_LOGIN=appuser
 RUN groupadd --gid ${GID} ${DOCKER_LOGIN} \
     && useradd --uid ${UID} --gid ${DOCKER_LOGIN} --shell /bin/bash --create-home ${DOCKER_LOGIN}
 
-USER ${DOCKER_LOGIN}
-
 WORKDIR /app/backend
 
 COPY ./dsp ./dsp
@@ -24,5 +22,7 @@ COPY ./dsp_run.sh ./
 
 COPY ./requirements.txt ./
 RUN pip3 install -r requirements.txt
+
+USER ${DOCKER_LOGIN}
 
 CMD ["./dsp_run.sh"]

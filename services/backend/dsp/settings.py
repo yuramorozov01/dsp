@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'drf_yasg',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,10 @@ SIMPLE_JWT = {
 
     'AUTH_HEADER_TYPES': ('JWT',),
 }
+
+
+# Celery configuration
+
+# Broker URL from where celery will take the tasks
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND')

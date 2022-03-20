@@ -1,6 +1,39 @@
 version: "3.7"
 
 services:
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - redisvolume:/data
+    env_file: ./.env
+
+  worker:
+    restart: always
+    build:
+      context: ./services/backend
+    volumes:
+      - ./services/backend:/app/backend/
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "-A", "dsp", "worker"]
+    env_file: ./.env
+    depends_on:
+      - redis
+      - db
+
+  flower:
+    restart: always
+    build:
+      context: ./services/backend
+    ports:
+      - "5555:5555"
+    entrypoint: []
+    command: ["celery", "-A", "dsp", "flower"]
+    env_file: ./.env
+    depends_on:
+      - redis
+      - worker
+
   backend:
     restart: always
     build:
@@ -30,4 +63,6 @@ services:
 
 volumes:
   postgresqldbvolume:
+    driver: local
+  redisvolume:
     driver: local
