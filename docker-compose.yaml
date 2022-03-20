@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  backend:
+    restart: always
+    build:
+      context: ./services/backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./services/backend:/app/backend/
+    env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "./dsp_run.sh"]
+    depends_on:
+      - db
+
+  db:
+    restart: always
+    image: postgres
+    ports:
+      - '5432'
+    volumes:
+      - postgresqldbvolume:/var/lib/postgresql/data
+    env_file: ./.env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+
+volumes:
+  postgresqldbvolume:
+    driver: local
