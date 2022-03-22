@@ -11,3 +11,4 @@ numpy==1.19.2
 psycopg2-binary==2.9.2
 python-decouple==3.6
 redis==4.1.4
+whitenoise==6.0.0
