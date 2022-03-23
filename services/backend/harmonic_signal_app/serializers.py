@@ -1,6 +1,8 @@
+from base_app.serializers import (CeleryTaskResult,
+                                  CeleryTaskResultShortDetails,
+                                  CustomUserSerializer)
 from harmonic_signal_app.models import HarmonicSignalResult
 from rest_framework import serializers
-from base_app.serializers import CustomUserSerializer, CeleryTaskResultShortDetails, CeleryTaskResult
 
 
 class HarmonicSignalResultCreateSerializer(serializers.ModelSerializer):

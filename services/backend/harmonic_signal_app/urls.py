@@ -1,5 +1,5 @@
-from harmonic_signal_app import views as harmonic_signal_views
 from django.urls import include, path
+from harmonic_signal_app import views as harmonic_signal_views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
