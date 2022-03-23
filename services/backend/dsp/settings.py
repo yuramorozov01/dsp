@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'djoser',
     'drf_yasg',
     'django_celery_results',
+
+    'base_app',
 ]
 
 MIDDLEWARE = [
@@ -117,14 +119,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Media files
 
-MEDIA_URL = 'uploads/'
+MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 
 
@@ -165,3 +167,5 @@ SIMPLE_JWT = {
 # Broker URL from where celery will take the tasks
 CELERY_BROKER_URL = config('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND')
+CELERY_TASK_SERIALIZER = config('CELERY_TASK_SERIALIZER')
+CELERY_RESULT_SERIALIZER = config('CELERY_RESULT_SERIALIZER')
