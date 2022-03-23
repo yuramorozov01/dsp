@@ -1,6 +1,7 @@
 from celery import Task as CeleryTask
 from dsp.celery import app
 from harmonic_signal_app.utils import generate_harmonic_signal
+from time import sleep
 
 
 class CalcHarmonicSignalTask(CeleryTask):

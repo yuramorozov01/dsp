@@ -13,6 +13,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 
+class CeleryTaskResultShortDetails(serializers.ModelSerializer):
+    """
+    Serializer for celery task result
+    """
+
+    class Meta:
+        model = TaskResult
+        fields = ['id', 'task_id', 'status']
+        read_only_fields = ['id', 'task_id', 'status']
+
+
 class CeleryTaskResult(serializers.ModelSerializer):
     """
     Serializer for celery task result

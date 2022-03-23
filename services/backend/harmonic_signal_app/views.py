@@ -55,7 +55,7 @@ class HarmonicSignalResultView(viewsets.GenericViewSet,
         return [permission() for permission in base_permissions]
 
     def perform_create(self, serializer):
-        author = None if hasattr(self.request, 'user') else self.request.user
+        author = None if not hasattr(self.request, 'user') else self.request.user
         amplitude = serializer.validated_data.get('amplitude')
         frequency = serializer.validated_data.get('frequency')
         initial_phase = serializer.validated_data.get('initial_phase')
@@ -66,4 +66,4 @@ class HarmonicSignalResultView(viewsets.GenericViewSet,
                 initial_phase
             ]
         )
-        serializer.save(author=author, celery_result=TaskResult.objects.filter(task_id=task.id).first())
+        serializer.save(author=author, task_id=task.id)

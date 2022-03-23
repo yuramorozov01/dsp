@@ -29,11 +29,7 @@ class HarmonicSignalResult(models.Model):
         'Initial phase'
     )
     started_calc_at = models.DateTimeField('Calculating start time', auto_now_add=True)
-    celery_result = models.ForeignKey(
-        'django_celery_results.TaskResult',
-        verbose_name='Celery result',
-        on_delete=models.CASCADE
-    )
+    task_id = models.CharField('Task ID', max_length=255, unique=True)
 
     class Meta:
         ordering = ['-started_calc_at']
@@ -44,4 +40,5 @@ class HarmonicSignalResult(models.Model):
         return f'{self.author}: ' \
                f'Amplitude {self.amplitude} | ' \
                f'Frequency {self.frequency} | ' \
-               f'Initial phase {self.initial_phase:.2f}'
+               f'Initial phase {self.initial_phase:.2f} | ' \
+               f'Task ID {self.task_id}'

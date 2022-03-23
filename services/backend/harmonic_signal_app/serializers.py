@@ -1,6 +1,6 @@
 from harmonic_signal_app.models import HarmonicSignalResult
 from rest_framework import serializers
-from base_app.serializers import CustomUserSerializer, CeleryTaskResult
+from base_app.serializers import CustomUserSerializer, CeleryTaskResultShortDetails, CeleryTaskResult
 
 
 class HarmonicSignalResultCreateSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class HarmonicSignalResultCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = HarmonicSignalResult
         fields = '__all__'
-        read_only_fields = ['author', 'started_calc_at', 'celery_result']
+        read_only_fields = ['author', 'started_calc_at', 'task_id']
 
 
 class HarmonicSignalResultDetailsSerializer(serializers.ModelSerializer):
@@ -22,10 +22,8 @@ class HarmonicSignalResultDetailsSerializer(serializers.ModelSerializer):
     """
 
     author = CustomUserSerializer(read_only=True, allow_null=True)
-    celery_result = CeleryTaskResult(read_only=True)
 
     class Meta:
         model = HarmonicSignalResult
-        fields = ['id', 'author', 'amplitude', 'frequency', 'initial_phase', 'started_calc_at', 'celery_result']
-        read_only_fields = ['id', 'author', 'amplitude', 'frequency', 'initial_phase', 'started_calc_at',
-                            'celery_result']
+        fields = ['id', 'author', 'amplitude', 'frequency', 'initial_phase', 'started_calc_at', 'task_id']
+        read_only_fields = ['id', 'author', 'amplitude', 'frequency', 'initial_phase', 'started_calc_at', 'task_id']
