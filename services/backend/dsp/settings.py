@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django_celery_results',
 
     'base_app',
+    'harmonic_signal_app',
 ]
 
 MIDDLEWARE = [
