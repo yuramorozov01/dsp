@@ -16,11 +16,7 @@ RUN groupadd --gid ${GID} ${DOCKER_LOGIN} \
 
 WORKDIR /app/backend
 
-COPY ./dsp ./dsp
-COPY ./manage.py ./
-COPY ./dsp_run.sh ./
-
-COPY ./requirements.txt ./
+COPY . .
 RUN pip3 install -r requirements.txt
 
 USER ${DOCKER_LOGIN}
