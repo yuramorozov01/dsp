@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_celery_results',
 
+    'channels',
+
     'base_app',
     'harmonic_signal_app',
 ]
@@ -68,7 +70,21 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'dsp.asgi.application'
+
 WSGI_APPLICATION = 'dsp.wsgi.application'
+
+
+# Channels configuration
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(config('REDIS_HOST'), config('REDIS_PORT', default=6379, cast=int))],
+        },
+    },
+}
 
 
 # Database
@@ -170,3 +186,12 @@ CELERY_BROKER_URL = config('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = config('CELERY_RESULT_BACKEND')
 CELERY_TASK_SERIALIZER = config('CELERY_TASK_SERIALIZER')
 CELERY_RESULT_SERIALIZER = config('CELERY_RESULT_SERIALIZER')
+
+CELERY_TASK_ROUTES = {
+    'calc_harmonic_signal_task': {
+        'queue': 'calc_task',
+    },
+    'send_task_result_task': {
+        'queue': 'send_task',
+    },
+}

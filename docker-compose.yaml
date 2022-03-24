@@ -4,18 +4,33 @@ services:
   redis:
     image: redis
     restart: always
+    ports:
+      - "6379:6379"
     volumes:
-      - redisvolume:/data
+      - ./services/backend/data/redis:/data
     env_file: ./.env
 
-  worker:
+  worker_calc_task:
     restart: always
     build:
       context: ./services/backend
     volumes:
       - ./services/backend:/app/backend/
     entrypoint: []
-    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "-A", "dsp", "worker"]
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "calc_task"]
+    env_file: ./.env
+    depends_on:
+      - redis
+      - db
+
+  worker_send_task:
+    restart: always
+    build:
+      context: ./services/backend
+    volumes:
+      - ./services/backend:/app/backend/
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "send_task"]
     env_file: ./.env
     depends_on:
       - redis
@@ -28,11 +43,12 @@ services:
     ports:
       - "5555:5555"
     entrypoint: []
-    command: ["celery", "-A", "dsp", "flower"]
+    command: ["celery", "--workdir=./src", "-A", "dsp", "flower"]
     env_file: ./.env
     depends_on:
       - redis
-      - worker
+      - worker_calc_task
+      - worker_send_task
 
   backend:
     restart: always
@@ -54,15 +70,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgresqldbvolume:/var/lib/postgresql/data
+      - ./services/backend/data/postgres:/var/lib/postgresql/data
     env_file: ./.env
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
-
-volumes:
-  postgresqldbvolume:
-    driver: local
-  redisvolume:
-    driver: local
