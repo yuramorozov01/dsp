@@ -1,14 +1,14 @@
-from harmonic_signal_app.models import HarmonicSignalResult
+from fourier_transform_app.models import FourierTransformResult
 from ws_app.consumers.celery_result import CeleryResultConsumer
 
 
-class HarmonicSignalResultConsumer(CeleryResultConsumer):
+class FourierTransformResultConsumer(CeleryResultConsumer):
     def connect(self):
         self.create_username_group()
         self.accept()
         task_id = self.scope['url_route']['kwargs']['task_id']
-        self.find_task_result_and_send_it(HarmonicSignalResult, task_id)
+        self.find_task_result_and_send_it(FourierTransformResult, task_id)
 
     def receive_json(self, content, **kwargs):
         task_id = content.get('task_id', '')
-        self.find_task_result_and_send_it(HarmonicSignalResult, task_id)
+        self.find_task_result_and_send_it(FourierTransformResult, task_id)
