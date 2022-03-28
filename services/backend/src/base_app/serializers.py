@@ -1,5 +1,5 @@
-from django.contrib.auth import get_user_model
 from celery.result import AsyncResult
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 

@@ -1,13 +1,10 @@
 import json
+from uuid import uuid4
 
 from asgiref.sync import async_to_sync
-
 from base_app.tasks import SendTaskResultTask
-
-from ws_app.consts import WS_TASK_READY_EVENT_KEY
 from channels.generic.websocket import JsonWebsocketConsumer
-
-from uuid import uuid4
+from ws_app.consts import WS_TASK_READY_EVENT_KEY
 
 
 class CeleryResultConsumer(JsonWebsocketConsumer):

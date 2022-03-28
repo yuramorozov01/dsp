@@ -8,9 +8,9 @@ class CalcHarmonicSignalTask(CeleryTask):
 
     def run(self, amplitude, frequency, initial_phase, *args, **kwargs):
         harmonic_values = generate_harmonic_signal(amplitude, frequency, initial_phase)
-        # ToDo:
-        # 1. Send after generating harmonic signal values to
-        return list(harmonic_values)
+        return {
+            'harmonic_values': harmonic_values,
+        }
 
 
 app.register_task(CalcHarmonicSignalTask)

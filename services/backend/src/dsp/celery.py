@@ -17,10 +17,13 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.task_routes = {
+    'send_task_result_task': {
+        'queue': 'send_task',
+    },
     'calc_harmonic_signal_task': {
         'queue': 'calc_task',
     },
-    'send_task_result_task': {
-        'queue': 'send_task',
+    'calc_fourier_transform_task': {
+        'queue': 'calc_task',
     },
 }

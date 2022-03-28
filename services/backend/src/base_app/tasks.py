@@ -1,9 +1,8 @@
 from celery import Task as CeleryTask
-from dsp.celery import app
 from celery.result import AsyncResult
-
-from ws_app.utils import send_ws_notification_to_groups
+from dsp.celery import app
 from ws_app.consts import WS_TASK_READY_EVENT_KEY
+from ws_app.utils import send_ws_notification_to_groups
 
 
 class SendTaskResultTask(CeleryTask):

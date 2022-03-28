@@ -7,7 +7,7 @@ class HarmonicSignalResult(models.Model):
     """
     Harmonic signal result model.
     This model contains harmonic signal results.
-    Here is foreign key on base result with celery result.
+    Task ID is equivalent to celery result.
     """
 
     author = models.ForeignKey(

@@ -1,7 +1,8 @@
 from harmonic_signal_app.models import HarmonicSignalResult
 from harmonic_signal_app.permissions import IsHarmonicSignalResultAuthor
-from harmonic_signal_app.serializers import (HarmonicSignalResultCreateSerializer,
-                                             HarmonicSignalResultDetailsSerializer)
+from harmonic_signal_app.serializers import (
+    HarmonicSignalResultCreateSerializer,
+    HarmonicSignalResultDetailsSerializer)
 from harmonic_signal_app.tasks import CalcHarmonicSignalTask
 from rest_framework import mixins, permissions, viewsets
 
