@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, validate_comma_separated_integer_list
+from django.core.validators import (MinValueValidator,
+                                    validate_comma_separated_integer_list)
 from django.db import models
 
 

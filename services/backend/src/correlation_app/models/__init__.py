@@ -1,0 +1,1 @@
+from correlation_app.models.simple_correlation import SimpleCorrelationResult

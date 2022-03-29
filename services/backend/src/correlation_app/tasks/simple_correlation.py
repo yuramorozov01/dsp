@@ -1,7 +1,8 @@
 from celery import Task as CeleryTask
 from correlation_app.utils import correlate
 from dsp.celery import app
-from fourier_transform_app.utils import generate_polyharmonic_signal, parse_params
+from fourier_transform_app.utils import (generate_polyharmonic_signal,
+                                         parse_params)
 
 
 class CalcSimpleCorrelationTask(CeleryTask):

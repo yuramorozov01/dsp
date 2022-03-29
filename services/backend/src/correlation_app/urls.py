@@ -1,5 +1,5 @@
-from django.urls import include, path
 from correlation_app import views as correlation_views
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()

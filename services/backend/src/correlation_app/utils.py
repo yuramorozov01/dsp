@@ -1,6 +1,5 @@
-from scipy.signal import correlate as scipy_correlate
-
 import numpy as np
+from scipy.signal import correlate as scipy_correlate
 
 
 def correlate(signal_1, signal_2):

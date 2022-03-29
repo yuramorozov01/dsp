@@ -1,6 +1,7 @@
 from celery import Task as CeleryTask
 from dsp.celery import app
-from fourier_transform_app.utils import generate_polyharmonic_signal, parse_params
+from fourier_transform_app.utils import (generate_polyharmonic_signal,
+                                         parse_params)
 
 
 class CalcFourierTransformTask(CeleryTask):

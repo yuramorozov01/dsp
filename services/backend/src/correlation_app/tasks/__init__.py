@@ -1,0 +1,1 @@
+from correlation_app.tasks.simple_correlation import CalcSimpleCorrelationTask
