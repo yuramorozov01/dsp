@@ -26,4 +26,7 @@ app.conf.task_routes = {
     'calc_fourier_transform_task': {
         'queue': 'calc_task',
     },
+    'calc_simple_correlation_task': {
+        'queue': 'calc_task',
+    },
 }

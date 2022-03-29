@@ -1,4 +1,3 @@
-import json
 from uuid import uuid4
 
 from asgiref.sync import async_to_sync
@@ -30,7 +29,7 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
     def is_task_exists(self, Model, task_id):
         return Model.objects.filter(task_id=task_id).exists()
 
-    def find_task_result_and_send_it(self, Model, task_id):
+    def send_task_result(self, Model, task_id):
         if self.is_task_exists(Model, task_id):
             SendTaskResultTask().apply_async(
                 kwargs={

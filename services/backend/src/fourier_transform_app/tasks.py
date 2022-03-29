@@ -1,16 +1,13 @@
 from celery import Task as CeleryTask
 from dsp.celery import app
-from fourier_transform_app.utils import (equalize_length_of_arrays,
-                                         generate_polyharmonic_signal)
+from fourier_transform_app.utils import generate_polyharmonic_signal, parse_params
 
 
 class CalcFourierTransformTask(CeleryTask):
     name = 'calc_fourier_transform_task'
 
-    def run(self, amplitudes, frequencies, *args, **kwargs):
-        amplitudes = [int(item) for item in amplitudes.split(',')]
-        frequencies = [int(item) for item in frequencies.split(',')]
-        amplitudes, frequencies = equalize_length_of_arrays(0, amplitudes, frequencies)
+    def run(self, raw_amplitudes, raw_frequencies, *args, **kwargs):
+        amplitudes, frequencies = parse_params(raw_amplitudes, raw_frequencies)
 
         time_size = 1024
 

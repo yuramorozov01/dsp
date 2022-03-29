@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base_app',
     'harmonic_signal_app',
     'fourier_transform_app',
+    'correlation_app',
 
     'ws_app',
 ]

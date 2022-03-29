@@ -7,8 +7,8 @@ class HarmonicSignalResultConsumer(CeleryResultConsumer):
         self.create_username_group()
         self.accept()
         task_id = self.scope['url_route']['kwargs']['task_id']
-        self.find_task_result_and_send_it(HarmonicSignalResult, task_id)
+        self.send_task_result(HarmonicSignalResult, task_id)
 
     def receive_json(self, content, **kwargs):
         task_id = content.get('task_id', '')
-        self.find_task_result_and_send_it(HarmonicSignalResult, task_id)
+        self.send_task_result(HarmonicSignalResult, task_id)

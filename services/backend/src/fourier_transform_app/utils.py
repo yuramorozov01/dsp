@@ -1,10 +1,12 @@
-from itertools import zip_longest
-
 import numpy as np
+from base_app.utils import equalize_length_of_arrays
 
 
-def equalize_length_of_arrays(fill_value, *args):
-    return tuple(zip(*zip_longest(*args, fillvalue=fill_value)))
+def parse_params(raw_amplitudes, raw_frequencies):
+    amplitudes = [int(item) for item in raw_amplitudes.split(',')]
+    frequencies = [int(item) for item in raw_frequencies.split(',')]
+    amplitudes, frequencies = equalize_length_of_arrays(0, amplitudes, frequencies)
+    return amplitudes, frequencies
 
 
 def generate_polyharmonic_signal(amount_of_points, amplitudes, frequencies):
