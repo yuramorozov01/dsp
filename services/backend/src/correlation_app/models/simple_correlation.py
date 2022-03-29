@@ -59,10 +59,10 @@ class SimpleCorrelationResult(models.Model):
 
     def __str__(self):
         return f'{self.author}: ' \
-               f'Amplitudes in signal 1{self.amplitudes_signal_1} | ' \
-               f'Frequencies in signal 1{self.frequencies_signal_1} | ' \
-               f'Amount of points in signal 1{self.amount_of_points_signal_1} | ' \
-               f'Amplitudes in signal 2{self.amplitudes_signal_2} | ' \
-               f'Frequencies in signal 2{self.frequencies_signal_2} | ' \
-               f'Amount of points in signal 2{self.amount_of_points_signal_2} | ' \
+               f'Amplitudes in signal 1 {self.amplitudes_signal_1} | ' \
+               f'Frequencies in signal 1 {self.frequencies_signal_1} | ' \
+               f'Amount of points in signal 1 {self.amount_of_points_signal_1} | ' \
+               f'Amplitudes in signal 2 {self.amplitudes_signal_2} | ' \
+               f'Frequencies in signal 2 {self.frequencies_signal_2} | ' \
+               f'Amount of points in signal 2 {self.amount_of_points_signal_2} | ' \
                f'Task ID {self.task_id}'
