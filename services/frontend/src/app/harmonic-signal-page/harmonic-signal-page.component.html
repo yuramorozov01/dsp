@@ -1,0 +1,31 @@
+<div class="page-title">
+    <h4>Harmonic signal</h4>
+    <button class="waves-effect waves-light btn darken-1">Calculate harmonic signal
+    </button>
+</div>
+
+<div class="row" *ngIf="harmonicSignals$ | async as harmonicSignals; else loader">
+    <table class="highlight" *ngIf="harmonicSignals.length !== 0; else empty">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Task ID</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let harmonicSignal of harmonicSignals">
+            <td>{{ harmonicSignal.id }}</td>
+            <td>{{ harmonicSignal.task_id }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty>
+        <div class="center">You don't have any calculated harmonic signals!</div>
+    </ng-template>
+</div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
