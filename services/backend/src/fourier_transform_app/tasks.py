@@ -18,7 +18,7 @@ class CalcFourierTransformTask(CeleryTask):
 
         time, result_values, harmonics_values = generate_polyharmonic_signal(time_size, amplitudes, frequencies)
         return {
-            'time': list(time),
+            'time': time.tolist(),
             'result_values': result_values,
             'harmonics_values': harmonics_values,
         }

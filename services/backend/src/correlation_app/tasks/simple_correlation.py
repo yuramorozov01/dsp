@@ -36,14 +36,14 @@ class CalcSimpleCorrelationTask(CeleryTask):
 
         return {
             'signal_1': {
-                'time': list(time_signal_1),
+                'time': time_signal_1.tolist(),
                 'result_values': result_values_signal_1,
             },
             'signal_2': {
-                'time': list(time_signal_2),
+                'time': time_signal_2.tolist(),
                 'result_values': result_values_signal_2,
             },
-            'correlation': list(correlation),
+            'correlation': correlation.tolist(),
         }
 
 

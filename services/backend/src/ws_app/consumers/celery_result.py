@@ -3,6 +3,7 @@ from uuid import uuid4
 from asgiref.sync import async_to_sync
 from base_app.tasks import SendTaskResultTask
 from channels.generic.websocket import JsonWebsocketConsumer
+from django_celery_results.models import TaskResult
 from ws_app.consts import WS_TASK_READY_EVENT_KEY
 
 
@@ -17,6 +18,12 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
             self.channel_name
         )
 
+    def connect(self):
+        self.create_username_group()
+        self.accept()
+        task_id = self.scope['url_route']['kwargs']['task_id']
+        self.send_task_result(task_id)
+
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.group_name,
@@ -26,11 +33,12 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
     def task_ready_event(self, event):
         self.send_json(content=event)
 
-    def is_task_exists(self, Model, task_id):
-        return Model.objects.filter(task_id=task_id).exists()
+    def is_task_exists(self, task_id):
+        model = getattr(self.Meta, 'model', TaskResult)
+        return model.objects.filter(task_id=task_id).exists()
 
-    def send_task_result(self, Model, task_id):
-        if self.is_task_exists(Model, task_id):
+    def send_task_result(self, task_id):
+        if self.is_task_exists(task_id):
             SendTaskResultTask().apply_async(
                 kwargs={
                     'task_id': task_id,
@@ -47,3 +55,7 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
             'error': True,
             'error_msg': error_message,
         })
+
+    def receive_json(self, content, **kwargs):
+        task_id = content.get('task_id', '')
+        self.send_task_result(task_id)

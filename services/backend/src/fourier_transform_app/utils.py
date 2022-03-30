@@ -14,7 +14,7 @@ def generate_polyharmonic_signal(amount_of_points, amplitudes, frequencies):
 
     harmonics_values = []
     for i in range(len(amplitudes)):
-        harmonics_values.append(list(amplitudes[i] * np.sin(2 * np.pi * frequencies[i] * time / len(time))))
+        harmonics_values.append((amplitudes[i] * np.sin(2 * np.pi * frequencies[i] * time / len(time))).tolist())
 
     result_values = []
     for j in time:
@@ -23,4 +23,4 @@ def generate_polyharmonic_signal(amount_of_points, amplitudes, frequencies):
             res += harmonic_values[j]
         result_values.append(res)
 
-    return list(map(int, list(time))), result_values, harmonics_values
+    return time, result_values, harmonics_values
