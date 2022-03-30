@@ -26,11 +26,11 @@ class CalcImageCorrelationTask(CeleryTask):
         return {
             'correlation_result': get_saved_image_url(path_to_save_correlation_result),
             'image_1_with_found_area': get_saved_image_url(path_to_save_image_1_with_found_area),
-            # 'axes': {
-            #     'x': x.tolist(),
-            #     'y': y.tolist(),
-            #     'z': z.tolist(),
-            # },
+            'axes': {
+                'x': x.tolist(),
+                'y': y.tolist(),
+                'z': z.tolist(),
+            },
         }
 
 
