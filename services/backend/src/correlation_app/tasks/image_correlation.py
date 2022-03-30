@@ -1,6 +1,8 @@
 from base_app.utils import get_unique_filename_by_task_id
 from celery import Task as CeleryTask
-from correlation_app.utils import get_axes_of_image, load_image, save_image, correlate_images, normalize_image, get_saved_image_url, get_rgb_2_bgr_image
+from correlation_app.utils import (correlate_images, get_axes_of_image,
+                                   get_rgb_2_bgr_image, get_saved_image_url,
+                                   load_image, normalize_image, save_image)
 from dsp.celery import app
 
 

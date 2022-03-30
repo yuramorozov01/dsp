@@ -1,4 +1,5 @@
-from correlation_app.models import ImageCorrelationResult, SimpleCorrelationResult
+from correlation_app.models import (ImageCorrelationResult,
+                                    SimpleCorrelationResult)
 from ws_app.consumers.celery_result import CeleryResultConsumer
 
 

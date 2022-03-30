@@ -1,5 +1,4 @@
 from correlation_app.utils import get_unique_filename_for_task_result
-
 from django.contrib.auth import get_user_model
 from django.db import models
 

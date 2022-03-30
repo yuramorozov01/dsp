@@ -1,11 +1,11 @@
-from django.conf import settings
 import os
 
-import numpy as np
-from scipy.signal import correlate as scipy_correlate, fftconvolve
 import cv2
-
+import numpy as np
 from base_app.utils import get_unique_filename_by_task_id
+from django.conf import settings
+from scipy.signal import correlate as scipy_correlate
+from scipy.signal import fftconvolve
 
 
 def get_unique_filename_for_task_result(instance, filename):

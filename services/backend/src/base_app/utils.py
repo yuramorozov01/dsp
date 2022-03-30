@@ -1,6 +1,5 @@
-from itertools import zip_longest
-
 import uuid
+from itertools import zip_longest
 
 
 def get_unique_filename_by_task_id(task_id, filename):
