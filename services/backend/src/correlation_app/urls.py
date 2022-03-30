@@ -8,6 +8,11 @@ router.register(
     correlation_views.SimpleCorrelationResultView,
     basename='simple_correlation'
 )
+router.register(
+    r'image_correlation',
+    correlation_views.ImageCorrelationResultView,
+    basename='image_correlation'
+)
 
 urlpatterns = [
     path(r'', include(router.urls)),

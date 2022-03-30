@@ -16,4 +16,5 @@ uploads/
 .coverage
 
 static/
+media/
 data/

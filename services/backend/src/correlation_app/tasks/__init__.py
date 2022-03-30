@@ -1,1 +1,2 @@
+from correlation_app.tasks.image_correlation import CalcImageCorrelationTask
 from correlation_app.tasks.simple_correlation import CalcSimpleCorrelationTask

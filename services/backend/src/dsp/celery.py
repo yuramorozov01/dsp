@@ -29,4 +29,7 @@ app.conf.task_routes = {
     'calc_simple_correlation_task': {
         'queue': 'calc_task',
     },
+    'calc_image_correlation_task': {
+        'queue': 'calc_task',
+    },
 }
