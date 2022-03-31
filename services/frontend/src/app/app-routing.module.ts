@@ -9,11 +9,14 @@ import { SiteLayoutComponent } from './shared/components/layouts/site-layout/sit
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 
+import { MainPageComponent } from './main-page/main-page.component';
+
 import { HarmonicSignalPageComponent } from './harmonic-signal-page/harmonic-signal-page.component';
+import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic-signal-view-page/harmonic-signal-view-page.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'auth',
         component: AuthLayoutComponent,
         children: [
             {
@@ -34,16 +37,23 @@ const routes: Routes = [
     {
         path: '',
         component: SiteLayoutComponent,
-        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
-                redirectTo: '/harmonic_signal',
+                redirectTo: '/main',
                 pathMatch: 'full',
             },
             {
+                path: 'main',
+                component: MainPageComponent,
+            },
+            {
                 path: 'harmonic_signal',
-                component: HarmonicSignalPageComponent
+                component: HarmonicSignalPageComponent,
+            },
+            {
+                path: 'harmonic_signal/:id',
+                component: HarmonicSignalViewPageComponent,
             },
         ],
     },

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import { IMessage } from '../../interfaces/utils.interfaces';
 import { IHarmonicSignal, IHarmonicSignalList } from '../../interfaces/harmonic-signal.interfaces';
 import { ParserService } from '../utils/parser.service';
 import { FormGroup } from '@angular/forms';
@@ -20,11 +21,20 @@ export class HarmonicSignalService {
     }
 
     getById(id: number): Observable<IHarmonicSignal> {
-        return this.http.get<IHarmonicSignal>(`/api/v1/harmonic_signal/${id}/`);
+        return this.http.get<IHarmonicSignal>(`/api/harmonic_signal/${id}/`);
     }
 
     create(formGroup: FormGroup): Observable<IHarmonicSignal> {
         const formData = this.parserService.getValuesFromFormGroup(formGroup);
-        return this.http.post<IHarmonicSignal>('/api/v1/harmonic_signal/', formData);
+        return this.http.post<IHarmonicSignal>('/api/harmonic_signal/', formData);
+    }
+
+    update(id: number, formGroup: FormGroup): Observable<IHarmonicSignal> {
+        const formData = this.parserService.getValuesFromFormGroup(formGroup);
+        return this.http.put<IHarmonicSignal>(`/api/harmonic_signal/${id}/`, formData);
+    }
+
+    delete(id: number): Observable<IMessage> {
+        return this.http.delete<IMessage>(`/api/v1/harmonic_siignal/${id}/`);
     }
 }

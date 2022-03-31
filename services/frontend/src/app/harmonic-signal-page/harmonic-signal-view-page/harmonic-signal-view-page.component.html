@@ -1,0 +1,27 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/harmonic_signal">Harmonic signal</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        View harmonic signal
+    </h4>
+    <span>
+        <button class="btn btn-small red" (click)="deleteHarmonicSignal()" *ngIf="harmonicSignal">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
+</div>
+
+<div class="row" *ngIf="harmonicSignal">
+    <div class="input-field">
+        <input id="amplitude" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.amplitude">
+        <label class="active" for="amplitude">Amplitude</label>
+    </div>
+    <div class="input-field">
+        <input id="frequency" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.frequency">
+        <label class="active" for="frequency">Frequency</label>
+    </div>
+    <div class="input-field">
+        <input id="initial_phase" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.initial_phase">
+        <label class="active" for="initial_phase">Initial phase</label>
+    </div>
+</div>

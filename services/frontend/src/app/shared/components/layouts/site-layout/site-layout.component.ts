@@ -14,7 +14,7 @@ export class SiteLayoutComponent implements OnInit {
 
     links = [
         {
-            url: '/',
+            url: '/main',
             name: 'Main',
         },
         {

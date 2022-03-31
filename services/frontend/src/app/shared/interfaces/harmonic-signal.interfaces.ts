@@ -17,3 +17,7 @@ export interface IHarmonicSignal {
     initial_phase: number;
     task_id: string;
 }
+
+export interface IWSHarmonicSignal {
+    harmonic_values: number[];
+}

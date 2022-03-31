@@ -20,6 +20,8 @@ import { SiteLayoutComponent } from './shared/components/layouts/site-layout/sit
 import { LoaderComponent } from './shared/components/loader/loader.component';
 
 import { HarmonicSignalPageComponent } from './harmonic-signal-page/harmonic-signal-page.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic-signal-view-page/harmonic-signal-view-page.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +32,8 @@ import { HarmonicSignalPageComponent } from './harmonic-signal-page/harmonic-sig
         RegisterPageComponent,
         LoaderComponent,
         HarmonicSignalPageComponent,
+        MainPageComponent,
+        HarmonicSignalViewPageComponent,
     ],
     imports: [
         BrowserModule,

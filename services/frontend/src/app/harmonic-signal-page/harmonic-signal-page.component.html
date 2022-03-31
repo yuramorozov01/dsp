@@ -1,31 +1,22 @@
 <div class="page-title">
-    <h4>Harmonic signal</h4>
-    <button class="waves-effect waves-light btn darken-1">Calculate harmonic signal
-    </button>
+    <h4>
+        <a routerLink="/harmonic_signal">Harmonic signal</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        {{ isNew ? 'Calculate' : 'view' }} harmonic signal
+    </h4>
+    <span>
+        <button class="btn btn-small red" (click)="deleteHarmonicSignal()" *ngIf="!isNew">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
 </div>
 
-<div class="row" *ngIf="harmonicSignals$ | async as harmonicSignals; else loader">
-    <table class="highlight" *ngIf="harmonicSignals.length !== 0; else empty">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Task ID</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr *ngFor="let harmonicSignal of harmonicSignals">
-            <td>{{ harmonicSignal.id }}</td>
-            <td>{{ harmonicSignal.task_id }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <ng-template #empty>
-        <div class="center">You don't have any calculated harmonic signals!</div>
-    </ng-template>
+<div class="row">
+    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div>
+            <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                Save changes
+            </button>
+        </div>
+    </form>
 </div>
-
-<ng-template #loader>
-    <app-loader></app-loader>
-</ng-template>
