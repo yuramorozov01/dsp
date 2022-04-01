@@ -27,7 +27,7 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 	private reconnection$: Observable<number>;
 	private reconnectInterval: number;
 	private reconnectAttempts: number;
-	private isConnected: boolean;
+	private isConnected: boolean = false;
 
 	public status: Observable<boolean>;
 
@@ -126,6 +126,9 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 	}
 
 	public send(method: string, body: any={}): void {
+        while (!this.isConnected) {
+            this.reconnect();
+        }
 		if (method && this.isConnected) {
 			this.webSocket$.next(<any>{
                 'method': method,

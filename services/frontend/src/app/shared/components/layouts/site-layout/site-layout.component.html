@@ -10,7 +10,7 @@
                     </li>
 
                     <li class="bold last" *ngIf="authService.isAuthenticated()">
-                        <a href="#" class="waves-effect waves-orange" (click)="logout($event)">Exit</a>
+                        <a href="#" class="waves-effect waves-orange white-text" (click)="logout($event)">Exit</a>
                     </li>
 
                     <li class="bold" *ngIf="!authService.isAuthenticated()">

@@ -107,8 +107,6 @@ export class HarmonicSignalViewPageComponent implements OnInit {
             },
         ];
         this.plotLayout = {
-            // width: 1200,
-            // height: 600,
             title: 'Harmonic signal',
         };
         this.plotConfig = {
