@@ -10,11 +10,12 @@ import { AuthService } from '../../../services/auth/auth.service';
     styleUrls: ['./site-layout.component.css']
 })
 export class SiteLayoutComponent implements OnInit {
+
     title = environment.title
 
     links = [
         {
-            url: '/main',
+            url: '/',
             name: 'Main',
         },
         {
@@ -23,7 +24,7 @@ export class SiteLayoutComponent implements OnInit {
         },
     ];
 
-    constructor(private auth: AuthService,
+    constructor(public authService: AuthService,
                 private router: Router) {
     }
 
@@ -32,7 +33,7 @@ export class SiteLayoutComponent implements OnInit {
 
     logout(event: Event) {
         event.preventDefault();
-        this.auth.logout();
+        this.authService.logout();
         this.router.navigate(['/']);
     }
 

@@ -11,19 +11,23 @@
     </span>
 </div>
 
-<div *ngIf="harmonicSignal">
-    <div class="input-field">
-        <input id="amplitude" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.amplitude">
-        <label class="active" for="amplitude">Amplitude</label>
+<div class="row" *ngIf="harmonicSignal">
+    <div class="col s12 m6 l3">
+        <div class="input-field">
+            <input id="amplitude" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.amplitude">
+            <label class="active" for="amplitude">Amplitude</label>
+        </div>
+        <div class="input-field">
+            <input id="frequency" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.frequency">
+            <label class="active" for="frequency">Frequency</label>
+        </div>
+        <div class="input-field">
+            <input id="initial_phase" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.initial_phase">
+            <label class="active" for="initial_phase">Initial phase</label>
+        </div>
     </div>
-    <div class="input-field">
-        <input id="frequency" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.frequency">
-        <label class="active" for="frequency">Frequency</label>
+    <div class="col s12 m12 l12">
+        <plotly-plot *ngIf="harmonicSignalResult" [data]="plotData" [layout]="plotLayout" [config]=""></plotly-plot>
     </div>
-    <div class="input-field">
-        <input id="initial_phase" type="number" [readOnly]="true" [(ngModel)]="harmonicSignal.initial_phase">
-        <label class="active" for="initial_phase">Initial phase</label>
-    </div>
-    <plotly-plot *ngIf="harmonicSignalResult" [data]="plotData" [layout]="plotLayout"></plotly-plot>
 </div>
 

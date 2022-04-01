@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     title: 'DSP',
+    titleFull: 'Digital Signal Processing',
     ws_base: 'ws://127.0.0.1:8000/ws',
 };
 

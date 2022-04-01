@@ -1,8 +1,6 @@
 <div class="page-title">
     <h4>
         <a routerLink="/harmonic_signal">Harmonic signal</a>
-        <i class="material-icons">keyboard_arrow_right</i>
-        {{ isNew ? 'Calculate' : 'view' }} harmonic signal
     </h4>
     <span>
         <button class="btn btn-small red" (click)="deleteHarmonicSignal()" *ngIf="!isNew">

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './shared/services/auth/auth.guard';
-
-import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './shared/components/layouts/site-layout/site-layout.component';
 
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -16,14 +13,9 @@ import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic
 
 const routes: Routes = [
     {
-        path: 'auth',
-        component: AuthLayoutComponent,
+        path: '',
+        component: SiteLayoutComponent,
         children: [
-            {
-                path: '',
-                redirectTo: '/login',
-                pathMatch: 'full',
-            },
             {
                 path: 'login',
                 component: LoginPageComponent,
@@ -32,19 +24,8 @@ const routes: Routes = [
                 path: 'register',
                 component: RegisterPageComponent,
             },
-        ],
-    },
-    {
-        path: '',
-        component: SiteLayoutComponent,
-        children: [
             {
                 path: '',
-                redirectTo: '/main',
-                pathMatch: 'full',
-            },
-            {
-                path: 'main',
                 component: MainPageComponent,
             },
             {

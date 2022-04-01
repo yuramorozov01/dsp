@@ -10,6 +10,8 @@ import { HarmonicSignalService } from '../../shared/services/harmonic-signal/har
 import { IHarmonicSignal, IHarmonicSignalResult } from '../../shared/interfaces/harmonic-signal.interfaces';
 
 import { MaterializeService } from '../../shared/services/utils/materialize.service';
+import { AuthService } from '../../shared/services/auth/auth.service';
+
 import { WebSocketService } from '../../shared/services/websocket/websocket.service';
 import { webSocketConfig } from '../../shared/services/websocket/websocket.config';
 import { IWebSocketMessage, IWebSocketResult, IWebSocketError } from '../../shared/interfaces/websocket.interfaces';
@@ -38,12 +40,14 @@ export class HarmonicSignalViewPageComponent implements OnInit {
     public harmonicSignalResult: IHarmonicSignalResult;
     public plotData = [];
     public plotLayout = {};
+    public plotConfig = {};
 
     private harmonicSignalError$: Observable<IWebSocketResultError>;
     private harmonicSignalResult$: Observable<IWebSocketHarmonicSignalResult>;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
+                private auth: AuthService,
                 private harmonicSignalService: HarmonicSignalService,
                 private webSocketService: WebSocketService) {
     }
@@ -102,12 +106,14 @@ export class HarmonicSignalViewPageComponent implements OnInit {
                 marker: {color: 'red'},
             },
         ];
-        this.plotLayout =
-        {
-            width: 1200,
-            height: 600,
+        this.plotLayout = {
+            // width: 1200,
+            // height: 600,
             title: 'Harmonic signal',
-        }
+        };
+        this.plotConfig = {
+            responsive: true,
+        };
     }
 
     public deleteHarmonicSignal() {

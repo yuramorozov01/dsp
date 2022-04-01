@@ -35,6 +35,6 @@ export class HarmonicSignalService {
     }
 
     delete(id: number): Observable<IMessage> {
-        return this.http.delete<IMessage>(`/api/v1/harmonic_siignal/${id}/`);
+        return this.http.delete<IMessage>(`/api/harmonic_signal/${id}/`);
     }
 }

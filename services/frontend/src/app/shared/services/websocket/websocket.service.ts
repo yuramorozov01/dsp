@@ -47,7 +47,7 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 			},
 			openObserver: {
 				next: (event: Event) => {
-					MaterializeService.toast({'Success': 'WebSocket connected!'});
+					// MaterializeService.toast({'Success': 'WebSocket connected!'});
 					this.connection$.next(true);
 				}
 			}

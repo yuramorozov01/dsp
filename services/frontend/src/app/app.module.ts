@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 
-import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './shared/components/layouts/site-layout/site-layout.component';
 
 import { LoaderComponent } from './shared/components/loader/loader.component';
@@ -32,7 +31,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
     declarations: [
         AppComponent,
         LoginPageComponent,
-        AuthLayoutComponent,
         SiteLayoutComponent,
         RegisterPageComponent,
         LoaderComponent,
