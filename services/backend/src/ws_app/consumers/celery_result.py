@@ -4,7 +4,9 @@ from asgiref.sync import async_to_sync
 from base_app.tasks import SendTaskResultTask
 from channels.generic.websocket import JsonWebsocketConsumer
 from django_celery_results.models import TaskResult
-from ws_app.consts import WS_TASK_READY_EVENT_KEY
+from ws_app.consts import WS_TASK_READY_EVENT_KEY, WS_ERROR_EVENT_KEY
+
+from ws_app.utils import send_ws_notification_to_groups
 
 
 class CeleryResultConsumer(JsonWebsocketConsumer):
@@ -21,8 +23,6 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
     def connect(self):
         self.create_username_group()
         self.accept()
-        task_id = self.scope['url_route']['kwargs']['task_id']
-        self.send_task_result(task_id)
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
@@ -30,7 +30,35 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
             self.channel_name
         )
 
+    def receive_json(self, content, **kwargs):
+        methods = {
+            'GET': self.get,
+            'CREATE': self.create,
+        }
+
+        handler = methods.get(content.get('method', ''))
+        if handler is None:
+            self.send_error_message('Unknown method!')
+            return
+
+        body = content.get('body')
+        if body is None:
+            self.send_error_message('Message body is not specified!')
+            return
+
+        handler(body)
+
+    def get(self, body):
+        task_id = body.get('task_id', '')
+        self.send_task_result(task_id)
+
+    def create(self, body):
+        pass
+
     def task_ready_event(self, event):
+        self.send_json(content=event)
+
+    def error_event(self, event):
         self.send_json(content=event)
 
     def is_task_exists(self, task_id):
@@ -43,19 +71,10 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
                 kwargs={
                     'task_id': task_id,
                     'group_name': self.group_name,
-                    'error': False,
-                    'error_msg': '',
                 }
             )
         else:
             self.send_error_message('Unknown task ID')
 
     def send_error_message(self, error_message):
-        self.send_json(content={
-            'error': True,
-            'error_msg': error_message,
-        })
-
-    def receive_json(self, content, **kwargs):
-        task_id = content.get('task_id', '')
-        self.send_task_result(task_id)
+        send_ws_notification_to_groups([self.group_name], WS_ERROR_EVENT_KEY, {'error_msg': error_message})

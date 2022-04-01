@@ -5,8 +5,8 @@ from ws_app.consumers import (FourierTransformResultConsumer,
                               SimpleCorrelationResultConsumer)
 
 websocket_urlpatterns = [
-    path('ws/harmonic_signal_result/<str:task_id>/', HarmonicSignalResultConsumer.as_asgi()),
-    path('ws/fourier_transform_result/<str:task_id>/', FourierTransformResultConsumer.as_asgi()),
-    path('ws/simple_correlation_result/<str:task_id>/', SimpleCorrelationResultConsumer.as_asgi()),
-    path('ws/image_correlation_result/<str:task_id>/', ImageCorrelationResultConsumer.as_asgi()),
+    path('ws/harmonic_signal_result/', HarmonicSignalResultConsumer.as_asgi()),
+    path('ws/fourier_transform_result/', FourierTransformResultConsumer.as_asgi()),
+    path('ws/simple_correlation_result/', SimpleCorrelationResultConsumer.as_asgi()),
+    path('ws/image_correlation_result/', ImageCorrelationResultConsumer.as_asgi()),
 ]
