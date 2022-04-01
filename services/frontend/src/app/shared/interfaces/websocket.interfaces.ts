@@ -1,11 +1,18 @@
 import { Observable } from 'rxjs';
 
-export interface IWebSocket<T> {
+export interface IWebSocketMessage<T> {
+	type: string;
+	data: T;
+}
+
+export interface IWebSocketError {
+    error_msg: string;
+}
+
+export interface IWebSocketResult<T> {
     task_id: string;
     status: string;
     result: T;
-    error: boolean;
-    error_msg: string;
 }
 
 export interface IWebSocketService {
@@ -19,9 +26,4 @@ export interface IWebSocketConfig {
 	url: string;
 	reconnectInterval?: number;
 	reconnectAttempts?: number;
-}
-
-export interface IWebSocketMessage<T> {
-	type: string;
-	data: T;
 }

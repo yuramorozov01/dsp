@@ -5,7 +5,7 @@ import { filter, map, share, distinctUntilChanged, takeWhile } from 'rxjs/operat
 
 import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 
-import { IWebSocket, IWebSocketConfig, IWebSocketMessage, IWebSocketService } from '../../interfaces/websocket.interfaces';
+import { IWebSocketConfig, IWebSocketMessage, IWebSocketService } from '../../interfaces/websocket.interfaces';
 import { webSocketConfig } from './websocket.config';
 
 import { MaterializeService } from '../utils/materialize.service';
@@ -125,9 +125,12 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 		}
 	}
 
-	public send(type: string, data: any={}): void {
-		if (type && this.isConnected) {
-			this.webSocket$.next(<any>JSON.stringify({ type, data }));
+	public send(method: string, body: any={}): void {
+		if (method && this.isConnected) {
+			this.webSocket$.next(<any>{
+                'method': method,
+                'body': body,
+            });
 		} else {
 			MaterializeService.toast({'error': 'Send error'});
 		}

@@ -7,6 +7,9 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import * as PlotlyJS from 'plotly.js-dist-min';
+import { PlotlyModule } from 'angular-plotly.js';
+
 import { TokenInterceptor } from './shared/services/auth/token.interceptor';
 
 import { AppComponent } from './app.component';
@@ -22,6 +25,8 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
 import { HarmonicSignalPageComponent } from './harmonic-signal-page/harmonic-signal-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic-signal-view-page/harmonic-signal-view-page.component';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
     declarations: [
@@ -41,6 +46,7 @@ import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
+        PlotlyModule,
     ],
     providers: [
         {

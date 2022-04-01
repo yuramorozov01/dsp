@@ -18,6 +18,6 @@ export interface IHarmonicSignal {
     task_id: string;
 }
 
-export interface IWSHarmonicSignal {
+export interface IHarmonicSignalResult {
     harmonic_values: number[];
 }
