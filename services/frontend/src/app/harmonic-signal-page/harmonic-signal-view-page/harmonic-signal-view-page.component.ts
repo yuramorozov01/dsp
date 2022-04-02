@@ -14,7 +14,7 @@ import { AuthService } from '../../shared/services/auth/auth.service';
 
 import { WebSocketService } from '../../shared/services/websocket/websocket.service';
 import { webSocketConfig } from '../../shared/services/websocket/websocket.config';
-import { IWebSocketMessage, IWebSocketResult, IWebSocketError } from '../../shared/interfaces/websocket.interfaces';
+import { IWebSocketMessage, IWebSocketResult, IWebSocketError, statusValues } from '../../shared/interfaces/websocket.interfaces';
 import { WS_EVENTS } from '../../shared/services/websocket/websocket.events';
 import { WS_METHODS } from '../../shared/services/websocket/websocket.methods';
 
@@ -36,6 +36,7 @@ type IWebSocketHarmonicSignalResult = IWebSocketResult<IHarmonicSignalResult>;
     ],
 })
 export class HarmonicSignalViewPageComponent implements OnInit {
+    public loadStatus: statusValues = 'PENDING';
 	public harmonicSignal: IHarmonicSignal;
     public harmonicSignalResult: IHarmonicSignalResult;
     public plotData = [];
@@ -55,8 +56,11 @@ export class HarmonicSignalViewPageComponent implements OnInit {
     public ngOnInit(): void {
         this.subscribeOnErrorMessages();
         this.subscribeOnResultMessages();
+        this.subscribeOnConnectMessages();
+    }
 
-		this.route.params
+    private getHarmonicSignal() {
+        this.route.params
 			.pipe(
 				switchMap(
 					(params: Params) => {
@@ -78,8 +82,8 @@ export class HarmonicSignalViewPageComponent implements OnInit {
 				},
 				error => MaterializeService.toast(error.error),
 			);
-
     }
+
 
     private subscribeOnErrorMessages() {
         this.harmonicSignalError$ = this.webSocketService.on<IWebSocketResultError>(WS_EVENTS.WS_ERROR_EVENT_KEY);
@@ -92,26 +96,41 @@ export class HarmonicSignalViewPageComponent implements OnInit {
         this.harmonicSignalResult$ = this.webSocketService.on<IWebSocketHarmonicSignalResult>(WS_EVENTS.WS_TASK_READY_EVENT_KEY);
         this.harmonicSignalResult$.subscribe((message: IWebSocketHarmonicSignalResult) => {
             this.parseResult(message);
+            if (['PENDING', 'STARTED'].includes(message.status)) {
+                this.webSocketService.send(WS_METHODS.WS_GET, {
+                    'task_id': this.harmonicSignal.task_id,
+                });
+            }
         });
     }
 
+    private subscribeOnConnectMessages() {
+        this.webSocketService.on<IWebSocketHarmonicSignalResult>(WS_EVENTS.WS_CONNECT_EVENT_KEY)
+            .subscribe((message: IWebSocketHarmonicSignalResult) => {
+                this.getHarmonicSignal()
+            });
+        }
+
     private parseResult(message: IWebSocketHarmonicSignalResult) {
-        this.harmonicSignalResult = message.result;
-        this.plotData = [
-            {
-                x: [...Array(this.harmonicSignalResult.harmonic_values.length).keys()],
-                y: this.harmonicSignalResult.harmonic_values,
-                type: 'scatter',
-                mode: 'lines+points',
-                marker: {color: 'red'},
-            },
-        ];
-        this.plotLayout = {
-            title: 'Harmonic signal',
-        };
-        this.plotConfig = {
-            responsive: true,
-        };
+        this.loadStatus = message.status;
+        if (this.loadStatus == 'SUCCESS') {
+            this.harmonicSignalResult = message.result;
+            this.plotData = [
+                {
+                    x: [...Array(this.harmonicSignalResult.harmonic_values.length).keys()],
+                    y: this.harmonicSignalResult.harmonic_values,
+                    type: 'scatter',
+                    mode: 'lines+points',
+                    marker: {color: 'red'},
+                },
+            ];
+            this.plotLayout = {
+                title: 'Harmonic signal',
+            };
+            this.plotConfig = {
+                responsive: true,
+            };
+        }
     }
 
     public deleteHarmonicSignal() {

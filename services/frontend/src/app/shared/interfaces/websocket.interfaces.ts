@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
 import { JsonObject } from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
+export declare type statusValues = 'PENDING' | 'STARTED' | 'SUCCESS' | 'FAILURE' | 'RETRY' | 'REVOKED';
+
 export interface IWebSocketMessage<T> {
 	type: string;
 	data: T;
@@ -12,7 +14,7 @@ export interface IWebSocketError {
 
 export interface IWebSocketResult<T> {
     task_id: string;
-    status: string;
+    status: statusValues;
     result: T;
 }
 

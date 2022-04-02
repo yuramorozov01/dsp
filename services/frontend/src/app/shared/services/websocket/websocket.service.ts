@@ -8,6 +8,7 @@ import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { IWebSocketConfig, IWebSocketMessage, IWebSocketService } from '../../interfaces/websocket.interfaces';
 import { webSocketConfig } from './websocket.config';
 
+import { AuthService } from '../auth/auth.service';
 import { MaterializeService } from '../utils/materialize.service';
 
 @Injectable({
@@ -31,7 +32,8 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 
 	public status: Observable<boolean>;
 
-	constructor(@Inject(webSocketConfig) private webSocketConfig: IWebSocketConfig) {
+	constructor(@Inject(webSocketConfig) private webSocketConfig: IWebSocketConfig,
+                private authService: AuthService) {
 		this.webSocketMessages$ = new Subject<IWebSocketMessage<any>>();
 
 		this.reconnectInterval = webSocketConfig.reconnectInterval || 5000;
@@ -52,6 +54,10 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 				}
 			}
 		};
+
+        if (this.authService.isAuthenticated()) {
+            this.config.url = `${this.config.url}?token=${this.authService.getAccessToken()}`
+        }
 
 		this.status = new Observable<boolean>((observer) => {
 			this.connection$ = observer;
@@ -126,16 +132,13 @@ export class WebSocketService implements IWebSocketService, OnDestroy {
 	}
 
 	public send(method: string, body: any={}): void {
-        while (!this.isConnected) {
-            this.reconnect();
-        }
 		if (method && this.isConnected) {
 			this.webSocket$.next(<any>{
                 'method': method,
                 'body': body,
             });
 		} else {
-			MaterializeService.toast({'error': 'Send error'});
+			MaterializeService.toast({'error': 'Please, refresh the page or try again later.'});
 		}
 	}
 }

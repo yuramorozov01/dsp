@@ -27,7 +27,14 @@
         </div>
     </div>
     <div class="col s12 m12 l12">
-        <plotly-plot *ngIf="harmonicSignalResult" [data]="plotData" [layout]="plotLayout" [config]=""></plotly-plot>
+
+        <plotly-plot *ngIf="((loadStatus == 'SUCCESS') && harmonicSignalResult) else loader" [data]="plotData" [layout]="plotLayout" [config]=""></plotly-plot>
     </div>
 </div>
+
+<ng-template #loader>
+    <div class="center">Task is calculating...</div>
+    <br>
+	<app-loader></app-loader>
+</ng-template>
 
