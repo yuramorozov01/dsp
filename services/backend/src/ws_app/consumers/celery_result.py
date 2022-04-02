@@ -38,22 +38,49 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
 
         handler = methods.get(content.get('method', ''))
         if handler is None:
-            self.send_error_message('Unknown method!')
+            self.send_error_message({'Method': ['Unknown method!']})
             return
 
         body = content.get('body')
         if body is None:
-            self.send_error_message('Message body is not specified!')
+            self.send_error_message({'Body': ['Message body is not specified!']})
             return
 
         handler(body)
 
     def get(self, body):
         task_id = body.get('task_id', '')
-        self.send_task_result(task_id)
+        if self.is_task_exists(task_id):
+            self.send_task_result(task_id)
+        else:
+            self.send_error_message({'Task ID': ['Unknown task ID']})
 
     def create(self, body):
-        pass
+        assert hasattr(self.Meta, 'serializer_class'), (
+            'Serializer class is not specified in Meta attributes'
+        )
+        assert hasattr(self.Meta, 'calculation_task_class'), (
+            'Calculation task class is not specified in Meta attributes'
+        )
+
+        serializer_class = getattr(self.Meta, 'serializer_class')
+        serializer = serializer_class(data=body)
+        if not serializer.is_valid():
+            error_messages = {}
+            for field, errors in serializer.errors.items():
+                error_messages[field] = list(map(str, errors))
+            self.send_error_message(error_messages)
+            return
+
+        calculation_task_class = getattr(self.Meta, 'calculation_task_class')
+        task = calculation_task_class().apply_async(
+            kwargs=serializer.validated_data
+        )
+
+        # wait until task is ready
+        res = task.get()
+
+        self.send_task_result(task.id)
 
     def task_ready_event(self, event):
         self.send_json(content=event)
@@ -62,19 +89,20 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
         self.send_json(content=event)
 
     def is_task_exists(self, task_id):
+        assert hasattr(self.Meta, 'model'), 'Model class is not specified in Meta attributes'
         model = getattr(self.Meta, 'model', TaskResult)
         return model.objects.filter(task_id=task_id).exists()
 
     def send_task_result(self, task_id):
-        if self.is_task_exists(task_id):
-            SendTaskResultTask().apply_async(
-                kwargs={
-                    'task_id': task_id,
-                    'group_name': self.group_name,
-                }
-            )
-        else:
-            self.send_error_message('Unknown task ID')
+        SendTaskResultTask().apply_async(
+            kwargs={
+                'task_id': task_id,
+                'group_name': self.group_name,
+            }
+        )
 
-    def send_error_message(self, error_message):
-        send_ws_notification_to_groups([self.group_name], WS_ERROR_EVENT_KEY, {'error_msg': error_message})
+    def send_error_message(self, error_messages):
+        send_ws_notification_to_groups([self.group_name], WS_ERROR_EVENT_KEY, {'errors': error_messages})
+
+    class Meta:
+        pass

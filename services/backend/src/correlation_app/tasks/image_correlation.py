@@ -9,7 +9,7 @@ from dsp.celery import app
 class CalcImageCorrelationTask(CeleryTask):
     name = 'calc_image_correlation_task'
 
-    def run(self, image_1_path, image_2_path, task_id, *args, **kwargs):
+    def run(self, *args, image_1_path='', image_2_path='', task_id=''):
 
         image_1 = load_image(image_1_path)
         image_2 = load_image(image_2_path)

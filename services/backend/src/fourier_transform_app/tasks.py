@@ -7,7 +7,7 @@ from fourier_transform_app.utils import (generate_polyharmonic_signal,
 class CalcFourierTransformTask(CeleryTask):
     name = 'calc_fourier_transform_task'
 
-    def run(self, raw_amplitudes, raw_frequencies, *args, **kwargs):
+    def run(self, *args, raw_amplitudes='1,1', raw_frequencies='2,2'):
         amplitudes, frequencies = parse_params(raw_amplitudes, raw_frequencies)
 
         time_size = 1024

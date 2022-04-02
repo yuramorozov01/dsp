@@ -59,10 +59,10 @@ class HarmonicSignalResultView(viewsets.GenericViewSet,
         frequency = serializer.validated_data.get('frequency')
         initial_phase = serializer.validated_data.get('initial_phase')
         task = CalcHarmonicSignalTask().apply_async(
-            args=[
-                amplitude,
-                frequency,
-                initial_phase
-            ]
+            kwargs={
+                'amplitude': amplitude,
+                'frequency': frequency,
+                'initial_phase': initial_phase,
+            }
         )
         serializer.save(author=author, task_id=task.id)
