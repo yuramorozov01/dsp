@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { JsonObject } from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
 export interface IWebSocketMessage<T> {
 	type: string;
@@ -6,7 +7,7 @@ export interface IWebSocketMessage<T> {
 }
 
 export interface IWebSocketError {
-    error_msg: string;
+    errors: JsonObject;
 }
 
 export interface IWebSocketResult<T> {

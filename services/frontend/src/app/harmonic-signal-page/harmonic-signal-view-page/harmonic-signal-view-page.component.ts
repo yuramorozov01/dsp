@@ -84,7 +84,7 @@ export class HarmonicSignalViewPageComponent implements OnInit {
     private subscribeOnErrorMessages() {
         this.harmonicSignalError$ = this.webSocketService.on<IWebSocketResultError>(WS_EVENTS.WS_ERROR_EVENT_KEY);
         this.harmonicSignalError$.subscribe((message: IWebSocketResultError) => {
-            MaterializeService.toast({'Error': message.error_msg});
+            MaterializeService.toast(message.errors);
         });
     }
 

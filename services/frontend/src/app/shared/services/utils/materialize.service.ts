@@ -5,7 +5,11 @@ declare var M;
 export class MaterializeService {
     static toast(msg: any) {
         Object.keys(msg).forEach((key) => {
-            M.toast({html: key + ': ' + msg[key]});
+            if (msg[key] instanceof Array) {
+                msg[key].forEach(function (value) { M.toast({html: key + ': ' + value}); });
+            } else if (typeof msg[key] === 'string') {
+                M.toast({html: key + ': ' + msg[key]});
+            }
         });
     }
 
