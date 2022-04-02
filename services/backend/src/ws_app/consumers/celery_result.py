@@ -4,7 +4,7 @@ from asgiref.sync import async_to_sync
 from base_app.tasks import SendTaskResultTask
 from channels.generic.websocket import JsonWebsocketConsumer
 from django_celery_results.models import TaskResult
-from ws_app.consts import WS_TASK_READY_EVENT_KEY, WS_ERROR_EVENT_KEY
+from ws_app.consts import WS_CONNECT_EVENT_KEY, WS_TASK_READY_EVENT_KEY, WS_ERROR_EVENT_KEY
 
 from ws_app.utils import send_ws_notification_to_groups
 
@@ -23,6 +23,7 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
     def connect(self):
         self.create_username_group()
         self.accept()
+        send_ws_notification_to_groups([self.group_name], WS_CONNECT_EVENT_KEY, {})
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
@@ -81,6 +82,9 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
         res = task.get()
 
         self.send_task_result(task.id)
+
+    def connect_event(self, event):
+        self.send_json(content=event)
 
     def task_ready_event(self, event):
         self.send_json(content=event)
