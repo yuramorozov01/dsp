@@ -34,14 +34,17 @@ class ClearUnsavedTaskResultsTask(CeleryTask):
             ImageCorrelationResult,
             SimpleCorrelationResult,
         ]
-        task_results_union = task_results_models[0].objects.only('id', 'task_id')
-        if len(task_results_models) >= 2:
-            task_results_union = \
-                task_results_union.union(*[model.objects.only('id', 'task_id') for model in task_results_models[1:]])
+        if len(task_results_models) >= 1:
+            task_results_union = task_results_models[0].objects.only('id', 'task_id')
+            if len(task_results_models) >= 2:
+                task_results_union = \
+                    task_results_union.union(*[model.objects.only('id', 'task_id') for model in task_results_models[1:]])
 
-        task_ids = task_results_union.values_list('task_id')
-        tasks_to_clear = TaskResult.objects.exclude(task_id__in=task_ids)
-        return tasks_to_clear.delete()
+            task_ids = task_results_union.values_list('task_id')
+            tasks_to_clear = TaskResult.objects.exclude(task_id__in=task_ids)
+            return tasks_to_clear.delete()
+        else:
+            return 0
 
 
 app.register_task(SendTaskResultTask)
