@@ -75,15 +75,18 @@ export class HarmonicSignalViewPageComponent implements OnInit {
 				(harmonicSignal: IHarmonicSignal) => {
 					if (harmonicSignal) {
 						this.harmonicSignal = harmonicSignal;
-                        this.webSocketService.send(WS_METHODS.WS_GET, {
-                            'task_id': this.harmonicSignal.task_id,
-                        });
+                        this.getHarmonicSignalResultByWebsocket();
 					}
 				},
 				error => MaterializeService.toast(error.error),
 			);
     }
 
+    private getHarmonicSignalResultByWebsocket() {
+        this.webSocketService.send(WS_METHODS.WS_GET, {
+            'task_id': this.harmonicSignal.task_id,
+        });
+    }
 
     private subscribeOnErrorMessages() {
         this.harmonicSignalError$ = this.webSocketService.on<IWebSocketResultError>(WS_EVENTS.WS_ERROR_EVENT_KEY);
@@ -97,9 +100,7 @@ export class HarmonicSignalViewPageComponent implements OnInit {
         this.harmonicSignalResult$.subscribe((message: IWebSocketHarmonicSignalResult) => {
             this.parseResult(message);
             if (['PENDING', 'STARTED'].includes(message.status)) {
-                this.webSocketService.send(WS_METHODS.WS_GET, {
-                    'task_id': this.harmonicSignal.task_id,
-                });
+                this.getHarmonicSignalResultByWebsocket();
             }
         });
     }
