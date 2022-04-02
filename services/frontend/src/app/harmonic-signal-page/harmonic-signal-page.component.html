@@ -3,18 +3,48 @@
         <a routerLink="/harmonic_signal">Harmonic signal</a>
     </h4>
     <span>
-        <button class="btn btn-small red" (click)="deleteHarmonicSignal()" *ngIf="!isNew">
-	    	<i class="material-icons">delete</i>
-		</button>
+        <button class="btn btn-small red" (click)="saveHarmonicSignal()">Save</button>
     </span>
 </div>
 
 <div class="row">
-    <form class="col s12 l6" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form class="col s12 m6 l3" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="input-field">
+            <input formControlName="amplitude" id="amplitude" type="number" [ngClass]="{'invalid': form.get('amplitude').invalid && form.get('amplitude').touched}" required>
+            <label class="active" for="amplitude">Amplitude</label>
+            <span class="helper-text red-text" *ngIf="form.get('amplitude').invalid && form.get('amplitude').touched">
+            	<span *ngIf="form.get('amplitude').errors['required']">Enter amplitude</span>
+                <span *ngIf="form.get('amplitude').errors['min']">Incorrect amplitude</span>
+                <span *ngIf="form.get('amplitude').errors['pattern']">Incorrect amplitude</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="frequency" id="frequency" type="number" [ngClass]="{'invalid': form.get('frequency').invalid && form.get('frequency').touched}" required>
+            <label class="active" for="frequency">Frequency</label>
+            <span class="helper-text red-text" *ngIf="form.get('frequency').invalid && form.get('frequency').touched">
+            	<span *ngIf="form.get('frequency').errors['required']">Enter frequency</span>
+                <span *ngIf="form.get('frequency').errors['min']">Incorrect frequency</span>
+                <span *ngIf="form.get('frequency').errors['pattern']">Incorrect frequency</span>
+            </span>
+        </div>
+        <div class="input-field">
+            <input formControlName="initial_phase" id="initial_phase" type="number" [ngClass]="{'invalid': form.get('initial_phase').invalid && form.get('initial_phase').touched}" required>
+            <label class="active" for="initial_phase">Initial phase</label>
+            <span class="helper-text red-text" *ngIf="form.get('initial_phase').invalid && form.get('initial_phase').touched">
+            	<span *ngIf="form.get('initial_phase').errors['required']">Enter initial phase</span>
+                <span *ngIf="form.get('initial_phase').errors['min']">Incorrect initial phase</span>
+            </span>
+        </div>
         <div>
             <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
-                Save changes
+                Calculate
             </button>
         </div>
     </form>
+    <div class="col s12 m12 l12">
+            <plotly-plot *ngIf="harmonicSignalResult" [data]="plotData" [layout]="plotLayout" [config]=""></plotly-plot>
+    </div>
 </div>
+
+
+<app-save-modal #saveModal></app-save-modal>

@@ -24,6 +24,7 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
 import { HarmonicSignalPageComponent } from './harmonic-signal-page/harmonic-signal-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic-signal-view-page/harmonic-signal-view-page.component';
+import { SaveModalComponent } from './shared/components/save-modal/save-modal.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -37,6 +38,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
         HarmonicSignalPageComponent,
         MainPageComponent,
         HarmonicSignalViewPageComponent,
+        SaveModalComponent,
     ],
     imports: [
         BrowserModule,

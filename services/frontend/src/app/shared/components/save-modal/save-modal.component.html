@@ -1,0 +1,13 @@
+<div id="modal" class="modal" #modal>
+    <div class="modal-content">
+        <h4>Save result</h4>
+        <div>Your result has been saved successfully!</div>
+        <div>You can view the result by this link: <a href="{{ link }}">{{ link }}</a></div>
+        <div>If you had been authenticated before, you can visit page <a href="/history">History</a> to view
+        all your saved results.</div>
+    </div>
+    <div class="modal-footer">
+        <a href="{{ link }}" class="modal-close waves-effect waves-green btn-flat">View</a>
+        <a class="modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+</div>
