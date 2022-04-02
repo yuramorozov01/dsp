@@ -12,8 +12,8 @@ from ws_app.utils import send_ws_notification_to_groups
 class CeleryResultConsumer(JsonWebsocketConsumer):
     def create_username_group(self):
         username = str(uuid4())
-        if self.scope['user'].is_authenticated:
-            username = self.scope['user'].username
+        # if self.scope['user'].is_authenticated:
+        #     username = self.scope['user'].username
         self.group_name = f'{WS_TASK_READY_EVENT_KEY}_{username}'
         async_to_sync(self.channel_layer.group_add)(
             self.group_name,
@@ -23,7 +23,7 @@ class CeleryResultConsumer(JsonWebsocketConsumer):
     def connect(self):
         self.create_username_group()
         self.accept()
-        send_ws_notification_to_groups([self.group_name], WS_CONNECT_EVENT_KEY, {})
+        send_ws_notification_to_groups([self.group_name], WS_CONNECT_EVENT_KEY, {'group': self.group_name})
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
