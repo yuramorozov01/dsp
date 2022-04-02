@@ -16,22 +16,22 @@ services:
       context: ./services/backend
     volumes:
       - ./services/backend:/app/backend/
+    env_file: ./.env
     entrypoint: []
     command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "calc_task"]
-    env_file: ./.env
     depends_on:
       - redis
       - db
 
-  worker_send_task:
+  worker_utils:
     restart: always
     build:
       context: ./services/backend
     volumes:
       - ./services/backend:/app/backend/
-    entrypoint: []
-    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "send_task"]
     env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "utils"]
     depends_on:
       - redis
       - db
@@ -42,13 +42,27 @@ services:
       context: ./services/backend
     ports:
       - "5555:5555"
+    env_file: ./.env
     entrypoint: []
     command: ["celery", "--workdir=./src", "-A", "dsp", "flower"]
-    env_file: ./.env
     depends_on:
+      - beat
       - redis
       - worker_calc_task
-      - worker_send_task
+      - worker_utils
+
+  beat:
+    restart: always
+    build:
+      context: ./services/backend
+    volumes:
+      - ./services/backend:/app/backend/
+    env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "beat", "-l", "INFO", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
+    depends_on:
+      - redis
+      - db
 
   backend:
     restart: always

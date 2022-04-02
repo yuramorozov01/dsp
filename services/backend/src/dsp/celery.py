@@ -1,6 +1,7 @@
 import os
 
 from celery import Celery
+from celery.schedules import crontab
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dsp.settings')
@@ -16,9 +17,23 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Load task modules from all registered Django apps.
 app.autodiscover_tasks()
 
+# Configure scheduled tasks
+app.conf.beat_schedule = {
+    'every-5-min-clear-unsaved-tasks': {
+        'task': 'base_app.tasks.ClearUnsavedTaskResultsTask',
+        'schedule': crontab(minute='*/5'),
+    },
+}
+
+# Configure task routing
 app.conf.task_routes = {
     'send_task_result_task': {
-        'queue': 'send_task',
+        'queue': 'utils',
+        'priority': 2,
+    },
+    'base_app.tasks.ClearUnsavedTaskResultsTask': {
+        'queue': 'utils',
+        'priority': 4,
     },
     'calc_harmonic_signal_task': {
         'queue': 'calc_task',
