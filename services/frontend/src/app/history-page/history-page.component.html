@@ -36,6 +36,38 @@
     </table>
 </div>
 
+<div class="page-subtitle">
+    <h6>Fourier transform</h6>
+</div>
+<div class="row" *ngIf="fourierTransforms$ | async as fourierTransforms; else loader">
+    <table class="highlight" *ngIf="fourierTransforms.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amplitudes</th>
+                <th>Frequencies</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let fourierTransform of fourierTransforms">
+                <td>{{ fourierTransform.id }}</td>
+                <td>{{ fourierTransform.amplitudes }}</td>
+                <td>{{ fourierTransform.frequencies }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/fourier_transform', fourierTransform.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteFourierTransform(fourierTransform.id)" *ngIf="fourierTransform">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <ng-template #empty>
     <div class="center">You don't have any results!</div>
 </ng-template>
