@@ -26,6 +26,8 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic-signal-view-page/harmonic-signal-view-page.component';
 import { SaveModalComponent } from './shared/components/save-modal/save-modal.component';
 import { HistoryPageComponent } from './history-page/history-page.component';
+import { FourierTransformPageComponent } from './fourier-transform-page/fourier-transform-page.component';
+import { FourierTransformViewPageComponent } from './fourier-transform-page/fourier-transform-view-page/fourier-transform-view-page.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -41,6 +43,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
         HarmonicSignalViewPageComponent,
         SaveModalComponent,
         HistoryPageComponent,
+        FourierTransformPageComponent,
+        FourierTransformViewPageComponent,
     ],
     imports: [
         BrowserModule,

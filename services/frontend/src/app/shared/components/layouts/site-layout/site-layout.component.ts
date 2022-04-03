@@ -23,6 +23,10 @@ export class SiteLayoutComponent implements OnInit {
             name: 'Harmonic signal',
         },
         {
+            url: '/fourier_transform',
+            name: 'Fourier transform',
+        },
+        {
             url: '/history',
             name: 'History',
         },

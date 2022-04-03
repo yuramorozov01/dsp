@@ -15,6 +15,9 @@ import { HistoryPageComponent } from './history-page/history-page.component';
 import { HarmonicSignalPageComponent } from './harmonic-signal-page/harmonic-signal-page.component';
 import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic-signal-view-page/harmonic-signal-view-page.component';
 
+import { FourierTransformPageComponent } from './fourier-transform-page/fourier-transform-page.component';
+import { FourierTransformViewPageComponent } from './fourier-transform-page/fourier-transform-view-page/fourier-transform-view-page.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -44,6 +47,14 @@ const routes: Routes = [
             {
                 path: 'harmonic_signal/:id',
                 component: HarmonicSignalViewPageComponent,
+            },
+            {
+                path: 'fourier_transform',
+                component: FourierTransformPageComponent,
+            },
+            {
+                path: 'fourier_transform/:id',
+                component: FourierTransformViewPageComponent,
             },
         ],
     },
