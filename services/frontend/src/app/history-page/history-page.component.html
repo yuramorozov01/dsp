@@ -1,1 +1,45 @@
-<p>history-page works!</p>
+<div class="page-title">
+    <h4>History</h4>
+</div>
+
+<div class="page-subtitle">
+    <h6>Harmonic signal</h6>
+</div>
+<div class="row" *ngIf="harmonicSignals$ | async as harmonicSignals; else loader">
+    <table class="highlight" *ngIf="harmonicSignals.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amplitude</th>
+                <th>Frequency</th>
+                <th>Initial phase</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let harmonicSignal of harmonicSignals">
+                <td>{{ harmonicSignal.id }}</td>
+                <td>{{ harmonicSignal.amplitude }}</td>
+                <td>{{ harmonicSignal.frequency }}</td>
+                <td>{{ harmonicSignal.initial_phase }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/harmonic_signal', harmonicSignal.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteHarmonicSignal(harmonicSignal.id)" *ngIf="harmonicSignal">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #empty>
+    <div class="center">You don't have any results!</div>
+</ng-template>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>
