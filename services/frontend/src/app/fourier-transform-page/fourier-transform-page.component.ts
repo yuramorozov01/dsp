@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, Inject, ChangeDetectorRef } f
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
@@ -107,15 +106,13 @@ export class FourierTransformPageComponent implements OnInit {
     private parseResult(message: IWebSocketFourierTransformResult) {
         // Parse main polyharmonic
         this.fourierTransformResult = message.result;
-        this.plotData = [
-            {
-                x: this.fourierTransformResult.time,
-                y: this.fourierTransformResult.result_values,
-                type: 'scatter',
-                mode: 'lines+points',
-                marker: {color: 'red'},
-            },
-        ];
+        this.plotData = [{
+            x: this.fourierTransformResult.time,
+            y: this.fourierTransformResult.result_values,
+            type: 'scatter',
+            mode: 'lines+points',
+            marker: {color: 'red'},
+        }];
         this.plotLayout = {
             title: 'Polyharmonic signal',
             width: 1350,
@@ -162,24 +159,26 @@ export class FourierTransformPageComponent implements OnInit {
         if (!event.target.checked) {
             toChangeValue = 1;
         }
+        let data = this.plotData[0].y.slice();
         for (let [i, value] of this.plotDataHarmonics[index][0].y.entries()) {
-            this.plotData[0].y[i] -= toChangeValue * value;
+            data[i] -= toChangeValue * value;
         }
-        PlotlyJS.newPlot('mainPolyharmonic', this.plotData, this.plotLayout);
+        this.plotData[0].y = data;
 
         // Redraw frequency spectre
         let polyharmonicFrequencies = this.form.get('frequencies').value.split(',').map(function (x) {
             return parseInt(x, 10);
         });
         let frequencyValue = polyharmonicFrequencies[index];
-        console.log(this.fourierTransformResult.fft_values[frequencyValue]);
-        this.plotDataFrequencySpectre[0].y[frequencyValue] -= toChangeValue * this.fourierTransformResult.fft_values[frequencyValue];
-        PlotlyJS.newPlot('frequencySpectre', this.plotDataFrequencySpectre, this.plotLayoutFrequencySpectre);
+        data = this.plotDataFrequencySpectre[0].y.slice();
+        data[frequencyValue] -= toChangeValue * this.fourierTransformResult.fft_values[frequencyValue];
+        this.plotDataFrequencySpectre[0].y = data;
     }
 
     private sendFormValue() {
         if (!this.form.invalid) {
             this.webSocketService.send(WS_METHODS.WS_CREATE, this.form.value);
+            this.fourierTransform = null;
         }
     }
 

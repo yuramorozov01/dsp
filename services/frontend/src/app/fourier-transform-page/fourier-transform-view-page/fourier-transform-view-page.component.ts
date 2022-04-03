@@ -183,19 +183,20 @@ export class FourierTransformViewPageComponent implements OnInit {
         if (!event.target.checked) {
             toChangeValue = 1;
         }
+        let data = this.plotData[0].y.slice();
         for (let [i, value] of this.plotDataHarmonics[index][0].y.entries()) {
-            this.plotData[0].y[i] -= toChangeValue * value;
+            data[i] -= toChangeValue * value;
         }
-        PlotlyJS.newPlot('mainPolyharmonic', this.plotData, this.plotLayout);
+        this.plotData[0].y = data;
 
         // Redraw frequency spectre
         let polyharmonicFrequencies = this.fourierTransform.frequencies.split(',').map(function (x) {
             return parseInt(x, 10);
         });
         let frequencyValue = polyharmonicFrequencies[index];
-        console.log(this.fourierTransformResult.fft_values[frequencyValue]);
-        this.plotDataFrequencySpectre[0].y[frequencyValue] -= toChangeValue * this.fourierTransformResult.fft_values[frequencyValue];
-        PlotlyJS.newPlot('frequencySpectre', this.plotDataFrequencySpectre, this.plotLayoutFrequencySpectre);
+        data = this.plotDataFrequencySpectre[0].y.slice();
+        data[frequencyValue] -= toChangeValue * this.fourierTransformResult.fft_values[frequencyValue];
+        this.plotDataFrequencySpectre[0].y = data;
     }
 
     public deleteFourierTransform() {
