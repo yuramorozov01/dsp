@@ -25,7 +25,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         if (this.auth.isAuthenticated()) {
-            this.router.navigate(['/harmonic_signal']);
+            this.router.navigate(['/']);
         }
 
         this.form = new FormGroup({

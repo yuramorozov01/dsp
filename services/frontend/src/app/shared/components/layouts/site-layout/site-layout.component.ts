@@ -22,6 +22,10 @@ export class SiteLayoutComponent implements OnInit {
             url: '/harmonic_signal',
             name: 'Harmonic signal',
         },
+        {
+            url: '/history',
+            name: 'History',
+        },
     ];
 
     constructor(public authService: AuthService,
