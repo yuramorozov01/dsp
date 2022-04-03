@@ -60,8 +60,8 @@ class ImageCorrelationResultView(viewsets.GenericViewSet,
         image_correlation_result_model = serializer.save(author=author, task_id=task_id)
         CalcImageCorrelationTask().apply_async(
             kwargs={
-                'image_1_path': image_correlation_result_model.image_1.path,
-                'image_2_path': image_correlation_result_model.image_2.path,
+                'image_1': image_correlation_result_model.image_1.path,
+                'image_2': image_correlation_result_model.image_2.path,
                 'task_id': task_id,
             },
             task_id=task_id

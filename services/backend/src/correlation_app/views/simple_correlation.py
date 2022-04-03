@@ -66,11 +66,11 @@ class SimpleCorrelationResultView(viewsets.GenericViewSet,
 
         task = CalcSimpleCorrelationTask().apply_async(
             kwargs={
-                'raw_amplitudes_signal_1': amplitudes_signal_1,
-                'raw_frequencies_signal_1': frequencies_signal_1,
+                'amplitudes_signal_1': amplitudes_signal_1,
+                'frequencies_signal_1': frequencies_signal_1,
                 'amount_of_points_signal_1': amount_of_points_signal_1,
-                'raw_amplitudes_signal_2': amplitudes_signal_2,
-                'raw_frequencies_signal_2': frequencies_signal_2,
+                'amplitudes_signal_2': amplitudes_signal_2,
+                'frequencies_signal_2': frequencies_signal_2,
                 'amount_of_points_signal_2': amount_of_points_signal_2,
             }
         )

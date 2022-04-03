@@ -59,8 +59,8 @@ class FourierTransformResultView(viewsets.GenericViewSet,
         frequencies = serializer.validated_data.get('frequencies')
         task = CalcFourierTransformTask().apply_async(
             kwargs={
-                'raw_amplitudes': amplitudes,
-                'raw_frequencies': frequencies,
+                'amplitudes': amplitudes,
+                'frequencies': frequencies,
             }
         )
         serializer.save(author=author, task_id=task.id)

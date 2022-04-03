@@ -10,13 +10,19 @@ class CalcSimpleCorrelationTask(CeleryTask):
 
     def run(self,
             *args,
-            raw_amplitudes_signal_1='1,1',
-            raw_frequencies_signal_1='0,1',
+            amplitudes_signal_1='1,1',
+            frequencies_signal_1='0,1',
             amount_of_points_signal_1=33,
-            raw_amplitudes_signal_2='1,1',
-            raw_frequencies_signal_2='1,0',
+            amplitudes_signal_2='1,1',
+            frequencies_signal_2='1,0',
             amount_of_points_signal_2=434
         ):
+        raw_amplitudes_signal_1 = amplitudes_signal_1
+        raw_frequencies_signal_1 = frequencies_signal_1
+
+        raw_amplitudes_signal_2 = amplitudes_signal_2
+        raw_frequencies_signal_2 = frequencies_signal_2
+
         amplitudes_signal_1, frequencies_signal_1 = parse_params(raw_amplitudes_signal_1, raw_frequencies_signal_1)
         time_signal_1, result_values_signal_1, harmonics_values_signal_1 = generate_polyharmonic_signal(
             amount_of_points_signal_1,
