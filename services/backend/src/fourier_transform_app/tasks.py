@@ -1,6 +1,7 @@
 from celery import Task as CeleryTask
 from dsp.celery import app
-from fourier_transform_app.utils import (generate_polyharmonic_signal,
+from fourier_transform_app.utils import (fft,
+                                         generate_polyharmonic_signal,
                                          parse_params)
 
 
@@ -19,10 +20,14 @@ class CalcFourierTransformTask(CeleryTask):
             time_size = (max(frequencies) + 1) * 2
 
         time, result_values, harmonics_values = generate_polyharmonic_signal(time_size, amplitudes, frequencies)
+
+        fft_values = fft(result_values)
+
         return {
             'time': time.tolist(),
             'result_values': result_values,
             'harmonics_values': harmonics_values,
+            'fft_values': fft_values.tolist(),
         }
 
 

@@ -24,3 +24,9 @@ def generate_polyharmonic_signal(amount_of_points, amplitudes, frequencies):
         result_values.append(res)
 
     return time, result_values, harmonics_values
+
+
+def fft(values):
+    fft_values = np.fft.fft(values)
+    int_fft_values = abs(fft_values)
+    return int_fft_values[:(len(values) // 2)]
