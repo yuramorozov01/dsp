@@ -32,7 +32,23 @@
         </div>
     </form>
     <div class="col s12 m12 l12">
-        <plotly-plot *ngIf="fourierTransformResult" [data]="plotData" [layout]="plotLayout" [config]=""></plotly-plot>
+        <plotly-plot id="mainPolyharmonic" *ngIf="fourierTransformResult" [data]="plotData" [layout]="plotLayout"></plotly-plot>
+    </div>
+    <div class="col s12 m12 l12" *ngIf="fourierTransformResult">
+        <div class="row">
+            <div class="col s4 m4 4 center" *ngFor="let data of plotDataHarmonics; index as i">
+                <plotly-plot [data]="data" [layout]="this.plotLayoutHarmonics[i]"></plotly-plot>
+                <p>
+                    <label>
+                        <input type="checkbox" class="filled-in" value="{{ i }}" (change)="recalcResultPolyharmonic(i, $event)" id="{{ i }}" checked="checked" />
+                        <span>Harmonic signal {{ i }}</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m12 l12">
+        <plotly-plot id="frequencySpectre" *ngIf="fourierTransformResult" [data]="plotDataFrequencySpectre" [layout]="plotLayoutFrequencySpectre"></plotly-plot>
     </div>
 </div>
 

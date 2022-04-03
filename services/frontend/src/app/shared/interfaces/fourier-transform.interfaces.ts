@@ -20,4 +20,5 @@ export interface IFourierTransformResult {
     time: number[];
     result_values: number[];
     harmonics_values: number[][];
+    fft_values: number[];
 }
