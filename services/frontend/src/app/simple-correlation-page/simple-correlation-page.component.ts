@@ -21,8 +21,6 @@ import { WS_EVENTS } from '../shared/services/websocket/websocket.events';
 import { WS_METHODS } from '../shared/services/websocket/websocket.methods';
 import { DOCUMENT } from '@angular/common';
 
-import * as PlotlyJS from 'plotly.js-dist-min';
-
 type IWebSocketResultError = IWebSocketError;
 type IWebSocketSimpleCorrelationResult = IWebSocketResult<ISimpleCorrelationResult>;
 
@@ -42,7 +40,7 @@ type IWebSocketSimpleCorrelationResult = IWebSocketResult<ISimpleCorrelationResu
 })
 export class SimpleCorrelationPageComponent implements OnInit {
     @ViewChild('saveModal') saveModal: SaveModalComponent;
-    @ViewChild('mainPolyharmonnic') mainPolyharmonic: ElementRef;
+    @ViewChild('polyharmonicResult') polyharmonicResult: ElementRef;
 
     form: FormGroup;
 
@@ -152,7 +150,17 @@ export class SimpleCorrelationPageComponent implements OnInit {
         };
     }
 
-    public recalcCorrelationResult(value: number, event) {
+    public recalcCorrelationResult(event) {
+        let bottom = event[0];
+        let top = event[1];
+        let data: number[] = this.simpleCorrelationResult.correlation.slice();
+        for (let i = 0; i <= bottom; i++) {
+            data[i] = 0;
+        }
+        for (let i = top; i < data.length; i++) {
+            data[i] = 0;
+        }
+        this.plotDataSignalResult[0].y = data;
     }
 
     private sendFormValue() {

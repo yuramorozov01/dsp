@@ -80,10 +80,12 @@
             </div>
         </div>
         <div class="col s12 m12 l12">
-            <plotly-plot id="polyharmonicResult" *ngIf="simpleCorrelationResult" [data]="plotDataSignalResult" [layout]="plotLayoutSignalResult"></plotly-plot>
+            <plotly-plot id="polyharmonicResult" *ngIf="simpleCorrelationResult" [data]="plotDataSignalResult" [layout]="plotLayoutSignalResult" #polyharmonicResult></plotly-plot>
         </div>
     </form>
+    <div class="col s12 m12 l12">
+        <nouislider *ngIf="simpleCorrelationResult" [connect]="true" [min]="1" [max]="simpleCorrelationResult.correlation.length" [ngModel]="[1, simpleCorrelationResult.correlation.length]" [tooltips]="[true, true]" [step]="1" (ngModelChange)="recalcCorrelationResult($event)"></nouislider>
+    </div>
 </div>
-
 
 <app-save-modal #saveModal></app-save-modal>

@@ -30,6 +30,8 @@ import { FourierTransformPageComponent } from './fourier-transform-page/fourier-
 import { FourierTransformViewPageComponent } from './fourier-transform-page/fourier-transform-view-page/fourier-transform-view-page.component';
 import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple-correlation-page.component';
 
+import { NouisliderModule } from 'ng2-nouislider';
+
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
@@ -55,6 +57,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
         ReactiveFormsModule,
         HttpClientModule,
         PlotlyModule,
+        NouisliderModule,
     ],
     providers: [
         {
