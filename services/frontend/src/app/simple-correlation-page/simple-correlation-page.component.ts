@@ -40,7 +40,6 @@ type IWebSocketSimpleCorrelationResult = IWebSocketResult<ISimpleCorrelationResu
 })
 export class SimpleCorrelationPageComponent implements OnInit {
     @ViewChild('saveModal') saveModal: SaveModalComponent;
-    @ViewChild('polyharmonicResult') polyharmonicResult: ElementRef;
 
     form: FormGroup;
 

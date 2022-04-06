@@ -19,6 +19,7 @@ import { FourierTransformPageComponent } from './fourier-transform-page/fourier-
 import { FourierTransformViewPageComponent } from './fourier-transform-page/fourier-transform-view-page/fourier-transform-view-page.component';
 
 import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple-correlation-page.component';
+import { SimpleCorrelationViewPageComponent } from './simple-correlation-page/simple-correlation-view-page/simple-correlation-view-page.component';
 
 const routes: Routes = [
     {
@@ -62,10 +63,10 @@ const routes: Routes = [
                 path: 'simple_correlation',
                 component: SimpleCorrelationPageComponent,
             },
-            // {
-            //     path: 'simple_correlation/:id',
-            //     component: SimpleCorrelationViewPageComponent,
-            // },
+            {
+                path: 'simple_correlation/:id',
+                component: SimpleCorrelationViewPageComponent,
+            },
         ],
     },
 ];
