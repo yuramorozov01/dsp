@@ -28,6 +28,7 @@ import { SaveModalComponent } from './shared/components/save-modal/save-modal.co
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { FourierTransformPageComponent } from './fourier-transform-page/fourier-transform-page.component';
 import { FourierTransformViewPageComponent } from './fourier-transform-page/fourier-transform-view-page/fourier-transform-view-page.component';
+import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple-correlation-page.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -45,6 +46,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
         HistoryPageComponent,
         FourierTransformPageComponent,
         FourierTransformViewPageComponent,
+        SimpleCorrelationPageComponent,
     ],
     imports: [
         BrowserModule,

@@ -27,6 +27,10 @@ export class SiteLayoutComponent implements OnInit {
             name: 'Fourier transform',
         },
         {
+            url: '/simple_correlation',
+            name: 'Simple correlation',
+        },
+        {
             url: '/history',
             name: 'History',
         },

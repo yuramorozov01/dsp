@@ -18,6 +18,8 @@ import { HarmonicSignalViewPageComponent } from './harmonic-signal-page/harmonic
 import { FourierTransformPageComponent } from './fourier-transform-page/fourier-transform-page.component';
 import { FourierTransformViewPageComponent } from './fourier-transform-page/fourier-transform-view-page/fourier-transform-view-page.component';
 
+import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple-correlation-page.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -56,6 +58,14 @@ const routes: Routes = [
                 path: 'fourier_transform/:id',
                 component: FourierTransformViewPageComponent,
             },
+            {
+                path: 'simple_correlation',
+                component: SimpleCorrelationPageComponent,
+            },
+            // {
+            //     path: 'simple_correlation/:id',
+            //     component: SimpleCorrelationViewPageComponent,
+            // },
         ],
     },
 ];
