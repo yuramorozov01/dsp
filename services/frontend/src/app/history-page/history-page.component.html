@@ -68,6 +68,46 @@
     </table>
 </div>
 
+<div class="page-subtitle">
+    <h6>Simple correlations</h6>
+</div>
+<div class="row" *ngIf="simpleCorrelations$ | async as simpleCorrelations; else loader">
+    <table class="highlight" *ngIf="simpleCorrelations.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amplitudes signal 1</th>
+                <th>Frequencies signal 1</th>
+                <th>Amount of points signal 1</th>
+                <th>Amplitudes signal 2</th>
+                <th>Frequencies signal 2</th>
+                <th>Amount of points signal 2</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let simpleCorrelation of simpleCorrelations">
+                <td>{{ simpleCorrelation.id }}</td>
+                <td>{{ simpleCorrelation.amplitudes_signal_1 }}</td>
+                <td>{{ simpleCorrelation.frequencies_signal_1 }}</td>
+                <td>{{ simpleCorrelation.amount_of_points_signal_1 }}</td>
+                <td>{{ simpleCorrelation.amplitudes_signal_2 }}</td>
+                <td>{{ simpleCorrelation.frequencies_signal_2 }}</td>
+                <td>{{ simpleCorrelation.amount_of_points_signal_2 }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/simple_correlation', simpleCorrelation.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteSimpleCorrelation(simpleCorrelation.id)" *ngIf="simpleCorrelation">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <ng-template #empty>
     <div class="center">You don't have any results!</div>
 </ng-template>

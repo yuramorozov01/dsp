@@ -8,6 +8,9 @@ import { IHarmonicSignalList } from '../shared/interfaces/harmonic-signal.interf
 import { FourierTransformService } from '../shared/services/fourier-transform/fourier-transform.service';
 import { IFourierTransformList } from '../shared/interfaces/fourier-transform.interfaces';
 
+import { SimpleCorrelationService } from '../shared/services/simple-correlation/simple-correlation.service';
+import { ISimpleCorrelationList } from '../shared/interfaces/simple-correlation.interfaces';
+
 import { MaterializeService } from '../shared/services/utils/materialize.service';
 
 
@@ -19,14 +22,17 @@ import { MaterializeService } from '../shared/services/utils/materialize.service
 export class HistoryPageComponent implements OnInit {
     harmonicSignals$: Observable<IHarmonicSignalList[]>;
     fourierTransforms$: Observable<IFourierTransformList[]>;
+    simpleCorrelations$: Observable<ISimpleCorrelationList[]>;
 
     constructor(private harmonicSignalService: HarmonicSignalService,
-                private fourierTransformService: FourierTransformService) {
+                private fourierTransformService: FourierTransformService,
+                private simpleCorrelationService: SimpleCorrelationService) {
     }
 
     ngOnInit(): void {
         this.fetchHarmonicSignals();
         this.fetchFourierTransforms();
+        this.fetchSimpleCorrelations();
     }
 
     private fetchHarmonicSignals() {
@@ -44,6 +50,17 @@ export class HistoryPageComponent implements OnInit {
         this.fourierTransforms$ = this.fourierTransformService.fetch();
         this.fourierTransforms$.subscribe(
             (fourierTransforms: IFourierTransformList[]) => {
+			},
+			error => {
+				MaterializeService.toast(error.error);
+			}
+        )
+    }
+
+    private fetchSimpleCorrelations() {
+        this.simpleCorrelations$ = this.simpleCorrelationService.fetch();
+        this.simpleCorrelations$.subscribe(
+            (simpleCorrelations: ISimpleCorrelationList[]) => {
 			},
 			error => {
 				MaterializeService.toast(error.error);
@@ -71,6 +88,18 @@ export class HistoryPageComponent implements OnInit {
 					response => MaterializeService.toast({'Success': 'Fourier transform has been deleted successfully'}),
 					error => MaterializeService.toast(error.error),
 					() => this.fetchFourierTransforms()
+				);
+		}
+	}
+
+    public deleteSimpleCorrelation(id: number) {
+		const decision = window.confirm('Are you sure you want to delete this simple correlation?');
+		if (decision) {
+			this.simpleCorrelationService.delete(id)
+				.subscribe(
+					response => MaterializeService.toast({'Success': 'Simple correlation has been deleted successfully'}),
+					error => MaterializeService.toast(error.error),
+					() => this.fetchSimpleCorrelations()
 				);
 		}
 	}
