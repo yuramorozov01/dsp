@@ -33,6 +33,7 @@ import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple
 import { NouisliderModule } from 'ng2-nouislider';
 import { SimpleCorrelationViewPageComponent } from './simple-correlation-page/simple-correlation-view-page/simple-correlation-view-page.component';
 import { ImageCorrelationPageComponent } from './image-correlation-page/image-correlation-page.component';
+import { ImageCorrelationViewPageComponent } from './image-correlation-page/image-correlation-view-page/image-correlation-view-page.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -53,6 +54,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
         SimpleCorrelationPageComponent,
         SimpleCorrelationViewPageComponent,
         ImageCorrelationPageComponent,
+        ImageCorrelationViewPageComponent,
     ],
     imports: [
         BrowserModule,

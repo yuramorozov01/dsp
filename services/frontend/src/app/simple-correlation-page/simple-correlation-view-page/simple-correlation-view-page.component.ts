@@ -36,7 +36,7 @@ type IWebSocketSimpleCorrelationResult = IWebSocketResult<ISimpleCorrelationResu
     ],
 })
 export class SimpleCorrelationViewPageComponent implements OnInit {
-public loadStatus: statusValues = 'PENDING';
+    public loadStatus: statusValues = 'PENDING';
 	public simpleCorrelation: ISimpleCorrelation;
     public simpleCorrelationResult: ISimpleCorrelationResult;
     public plotDataSignal1 = [];

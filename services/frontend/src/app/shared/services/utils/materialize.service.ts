@@ -28,6 +28,10 @@ export class MaterializeService {
         return M.Modal.getInstance(ref.nativeElement);
     }
 
+    static initializeMaterialbox(ref: ElementRef) {
+        M.Materialbox.init(ref.nativeElement);
+    }
+
     static updateTextInputs() {
         M.updateTextFields();
     }

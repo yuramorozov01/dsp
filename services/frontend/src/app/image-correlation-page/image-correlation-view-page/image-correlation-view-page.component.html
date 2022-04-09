@@ -1,0 +1,55 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/image_correlation">Image correlation</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        View image correlation (Read-Only mode)
+    </h4>
+    <span>
+        <button class="btn btn-small red" (click)="deleteImageCorrelation()" *ngIf="imageCorrelation">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
+</div>
+
+<div class="row" *ngIf="imageCorrelation">
+    <div class="col s12 m12 l12">
+        <div class="row">
+            <div class="col s12 m6 l3">
+                <div class="page-subtitle">
+                    <h5>Image 1</h5>
+                </div>
+                <img class="image-preview materialboxed" src="{{ imageCorrelation.image_1 }}" #materialboxImage1>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="page-subtitle">
+                    <h5>Image 2</h5>
+                </div>
+                <img class="image-preview materialboxed" src="{{ imageCorrelation.image_2 }}" #materialboxImage2>
+            </div>
+            <div class="col s12 m6 l3" *ngIf="imageCorrelationResult">
+                <div class="page-subtitle">
+                    <h5>Correlation result</h5>
+                </div>
+                <img class="image-preview materialboxed" src="{{ hostBase }}{{ imageCorrelationResult.correlation_result }}" #materialboxImageCorrelationResult>
+            </div>
+            <div class="col s12 m6 l3" *ngIf="imageCorrelationResult">
+                <div class="page-subtitle">
+                    <h5>Found image part</h5>
+                </div>
+                <img class="image-preview materialboxed" src="{{ hostBase }}{{ imageCorrelationResult.image_1_with_found_area }}" #materialboxImageFoundImage>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12 center">
+                <plotly-plot id="polyharmonicSignal1" *ngIf="((loadStatus == 'SUCCESS') && imageCorrelationResult) else loader" [data]="plotData" [layout]="plotLayout"></plotly-plot>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #loader>
+    <div class="center">Task is calculating...</div>
+    <br>
+	<app-loader></app-loader>
+</ng-template>
+
