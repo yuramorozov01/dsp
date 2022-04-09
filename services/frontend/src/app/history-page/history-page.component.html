@@ -108,6 +108,38 @@
     </table>
 </div>
 
+<div class="page-subtitle">
+    <h6>Image correlations</h6>
+</div>
+<div class="row" *ngIf="imageCorrelations$ | async as imageCorrelations; else loader">
+    <table class="highlight" *ngIf="imageCorrelations.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image 1</th>
+                <th>Image 2</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let imageCorrelation of imageCorrelations">
+                <td>{{ imageCorrelation.id }}</td>
+                <td><a href="{{ imageCorrelation.image_1 }}" target="_blank">Image 1</a></td>
+                <td><a href="{{ imageCorrelation.image_2 }}" target="_blank">Image 2</a></td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/image_correlation', imageCorrelation.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteImageCorrelation(imageCorrelation.id)" *ngIf="imageCorrelation">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <ng-template #empty>
     <div class="center">You don't have any results!</div>
 </ng-template>

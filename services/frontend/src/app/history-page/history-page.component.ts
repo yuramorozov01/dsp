@@ -11,6 +11,9 @@ import { IFourierTransformList } from '../shared/interfaces/fourier-transform.in
 import { SimpleCorrelationService } from '../shared/services/simple-correlation/simple-correlation.service';
 import { ISimpleCorrelationList } from '../shared/interfaces/simple-correlation.interfaces';
 
+import { ImageCorrelationService } from '../shared/services/image-correlation/image-correlation.service';
+import { IImageCorrelationList } from '../shared/interfaces/image-correlation.interfaces';
+
 import { MaterializeService } from '../shared/services/utils/materialize.service';
 
 
@@ -23,16 +26,19 @@ export class HistoryPageComponent implements OnInit {
     harmonicSignals$: Observable<IHarmonicSignalList[]>;
     fourierTransforms$: Observable<IFourierTransformList[]>;
     simpleCorrelations$: Observable<ISimpleCorrelationList[]>;
+    imageCorrelations$: Observable<IImageCorrelationList[]>;
 
     constructor(private harmonicSignalService: HarmonicSignalService,
                 private fourierTransformService: FourierTransformService,
-                private simpleCorrelationService: SimpleCorrelationService) {
+                private simpleCorrelationService: SimpleCorrelationService,
+                private imageCorrelationService: ImageCorrelationService) {
     }
 
     ngOnInit(): void {
         this.fetchHarmonicSignals();
         this.fetchFourierTransforms();
         this.fetchSimpleCorrelations();
+        this.fetchImageCorrelations();
     }
 
     private fetchHarmonicSignals() {
@@ -61,6 +67,17 @@ export class HistoryPageComponent implements OnInit {
         this.simpleCorrelations$ = this.simpleCorrelationService.fetch();
         this.simpleCorrelations$.subscribe(
             (simpleCorrelations: ISimpleCorrelationList[]) => {
+			},
+			error => {
+				MaterializeService.toast(error.error);
+			}
+        )
+    }
+
+    private fetchImageCorrelations() {
+        this.imageCorrelations$ = this.imageCorrelationService.fetch();
+        this.imageCorrelations$.subscribe(
+            (imageCorrelations: IImageCorrelationList[]) => {
 			},
 			error => {
 				MaterializeService.toast(error.error);
@@ -100,6 +117,18 @@ export class HistoryPageComponent implements OnInit {
 					response => MaterializeService.toast({'Success': 'Simple correlation has been deleted successfully'}),
 					error => MaterializeService.toast(error.error),
 					() => this.fetchSimpleCorrelations()
+				);
+		}
+	}
+
+    public deleteImageCorrelation(id: number) {
+		const decision = window.confirm('Are you sure you want to delete this image correlation?');
+		if (decision) {
+			this.imageCorrelationService.delete(id)
+				.subscribe(
+					response => MaterializeService.toast({'Success': 'Image correlation has been deleted successfully'}),
+					error => MaterializeService.toast(error.error),
+					() => this.fetchImageCorrelations()
 				);
 		}
 	}
