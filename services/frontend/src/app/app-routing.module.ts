@@ -21,6 +21,8 @@ import { FourierTransformViewPageComponent } from './fourier-transform-page/four
 import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple-correlation-page.component';
 import { SimpleCorrelationViewPageComponent } from './simple-correlation-page/simple-correlation-view-page/simple-correlation-view-page.component';
 
+import { ImageCorrelationPageComponent } from './image-correlation-page/image-correlation-page.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -66,6 +68,10 @@ const routes: Routes = [
             {
                 path: 'simple_correlation/:id',
                 component: SimpleCorrelationViewPageComponent,
+            },
+            {
+                path: 'image_correlation',
+                component: ImageCorrelationPageComponent,
             },
         ],
     },

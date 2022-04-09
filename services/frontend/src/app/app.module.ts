@@ -32,6 +32,7 @@ import { SimpleCorrelationPageComponent } from './simple-correlation-page/simple
 
 import { NouisliderModule } from 'ng2-nouislider';
 import { SimpleCorrelationViewPageComponent } from './simple-correlation-page/simple-correlation-view-page/simple-correlation-view-page.component';
+import { ImageCorrelationPageComponent } from './image-correlation-page/image-correlation-page.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -51,6 +52,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
         FourierTransformViewPageComponent,
         SimpleCorrelationPageComponent,
         SimpleCorrelationViewPageComponent,
+        ImageCorrelationPageComponent,
     ],
     imports: [
         BrowserModule,

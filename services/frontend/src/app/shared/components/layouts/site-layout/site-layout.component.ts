@@ -31,6 +31,10 @@ export class SiteLayoutComponent implements OnInit {
             name: 'Simple correlation',
         },
         {
+            url: '/image_correlation',
+            name: 'Image correlation',
+        },
+        {
             url: '/history',
             name: 'History',
         },
