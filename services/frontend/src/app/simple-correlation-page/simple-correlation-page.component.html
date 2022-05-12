@@ -1,0 +1,91 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/simple_correlation">Simple correlation</a>
+    </h4>
+    <span>
+        <button class="btn btn-small red" (click)="saveSimpleCorrelation()">Save</button>
+    </span>
+</div>
+
+<div class="row">
+    <form class="col s12 m12 l12" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col s12 m6 l6">
+                <div class="input-field">
+                    <input formControlName="amplitudes_signal_1" id="amplitudes_signal_1" type="text" placeholder="33,8" [ngClass]="{'invalid': form.get('amplitudes_signal_1').invalid && form.get('amplitudes_signal_1').touched}" required>
+                    <label class="active" for="amplitudes_signal_1">Amplitudes</label>
+                    <span class="helper-text red-text" *ngIf="form.get('amplitudes_signal_1').invalid && form.get('amplitudes_signal_1').touched">
+                        <span *ngIf="form.get('amplitudes_signal_1').errors['required']">Enter amplitudes</span>
+                        <span *ngIf="form.get('amplitudes_signal_1').errors['pattern']">Incorrect amplitudes (format: digit[,digit])</span>
+                    </span>
+                </div>
+                <div class="input-field">
+                    <input formControlName="frequencies_signal_1" id="frequencies_signal_1" type="text" placeholder="5,89" [ngClass]="{'invalid': form.get('frequencies_signal_1').invalid && form.get('frequencies_signal_1').touched}" required>
+                    <label class="active" for="frequencies_signal_1">Frequencies</label>
+                    <span class="helper-text red-text" *ngIf="form.get('frequencies_signal_1').invalid && form.get('frequencies_signal_1').touched">
+                        <span *ngIf="form.get('frequencies_signal_1').errors['required']">Enter frequencies</span>
+                        <span *ngIf="form.get('frequencies_signal_1').errors['pattern']">Incorrect frequencies (format: digit[,digit])</span>
+                    </span>
+                </div>
+                <div class="input-field">
+                    <input formControlName="amount_of_points_signal_1" id="amount_of_points_signal_1" type="number" [ngClass]="{'invalid': form.get('amount_of_points_signal_1').invalid && form.get('amount_of_points_signal_1').touched}" required>
+                    <label class="active" for="amount_of_points_signal_1">Amount of points</label>
+                    <span class="helper-text red-text" *ngIf="form.get('amount_of_points_signal_1').invalid && form.get('amount_of_points_signal_1').touched">
+                        <span *ngIf="form.get('amount_of_points_signal_1').errors['required']">Enter amount of points</span>
+                        <span *ngIf="form.get('amount_of_points_signal_1').errors['min']">Incorrect amount of points</span>
+                    </span>
+                </div>
+                <div>
+                    <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                        Calculate
+                    </button>
+                </div>
+                <div class="col s12 m12 l12">
+                    <plotly-plot id="polyharmonicSignal1" *ngIf="simpleCorrelationResult" [data]="plotDataSignal1" [layout]="plotLayoutSignal1"></plotly-plot>
+                </div>
+            </div>
+            <div class="col s12 m6 l6">
+                <div class="input-field">
+                    <input formControlName="amplitudes_signal_2" id="amplitudes_signal_2" type="text" placeholder="33,8" [ngClass]="{'invalid': form.get('amplitudes_signal_2').invalid && form.get('amplitudes_signal_2').touched}" required>
+                    <label class="active" for="amplitudes_signal_2">Amplitudes</label>
+                    <span class="helper-text red-text" *ngIf="form.get('amplitudes_signal_2').invalid && form.get('amplitudes_signal_2').touched">
+                        <span *ngIf="form.get('amplitudes_signal_2').errors['required']">Enter amplitudes</span>
+                        <span *ngIf="form.get('amplitudes_signal_2').errors['pattern']">Incorrect amplitudes (format: digit[,digit])</span>
+                    </span>
+                </div>
+                <div class="input-field">
+                    <input formControlName="frequencies_signal_2" id="frequencies_signal_2" type="text" placeholder="5,89" [ngClass]="{'invalid': form.get('frequencies_signal_2').invalid && form.get('frequencies_signal_2').touched}" required>
+                    <label class="active" for="frequencies_signal_2">Frequencies</label>
+                    <span class="helper-text red-text" *ngIf="form.get('frequencies_signal_2').invalid && form.get('frequencies_signal_2').touched">
+                        <span *ngIf="form.get('frequencies_signal_2').errors['required']">Enter frequencies</span>
+                        <span *ngIf="form.get('frequencies_signal_2').errors['pattern']">Incorrect frequencies (format: digit[,digit])</span>
+                    </span>
+                </div>
+                <div class="input-field">
+                    <input formControlName="amount_of_points_signal_2" id="amount_of_points_signal_2" type="number" [ngClass]="{'invalid': form.get('amount_of_points_signal_2').invalid && form.get('amount_of_points_signal_2').touched}" required>
+                    <label class="active" for="amount_of_points_signal_2">Amount of points</label>
+                    <span class="helper-text red-text" *ngIf="form.get('amount_of_points_signal_2').invalid && form.get('amount_of_points_signal_2').touched">
+                        <span *ngIf="form.get('amount_of_points_signal_2').errors['required']">Enter amount of points</span>
+                        <span *ngIf="form.get('amount_of_points_signal_2').errors['min']">Incorrect amount of points</span>
+                    </span>
+                </div>
+                <div>
+                    <button type="submit" [disabled]="form.invalid || form.disabled" class="waves-effect waves-light btn">
+                        Calculate
+                    </button>
+                </div>
+                <div class="col s12 m12 l12">
+                    <plotly-plot id="polyharmonicSignal2" *ngIf="simpleCorrelationResult" [data]="plotDataSignal2" [layout]="plotLayoutSignal2"></plotly-plot>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m12 l12">
+            <plotly-plot id="polyharmonicResult" *ngIf="simpleCorrelationResult" [data]="plotDataSignalResult" [layout]="plotLayoutSignalResult"></plotly-plot>
+        </div>
+    </form>
+    <div class="col s12 m12 l12">
+        <nouislider *ngIf="simpleCorrelationResult" [connect]="true" [min]="1" [max]="simpleCorrelationResult.correlation.length" [ngModel]="[1, simpleCorrelationResult.correlation.length]" [tooltips]="[true, true]" [step]="1" (ngModelChange)="recalcCorrelationResult($event)"></nouislider>
+    </div>
+</div>
+
+<app-save-modal #saveModal></app-save-modal>

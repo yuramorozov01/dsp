@@ -1,0 +1,7 @@
+.image-preview {
+    height: auto;
+    width: 300px;
+    object-fit: scale-down;
+    object-position: 0 0; /*top left position (optional)*/
+}
+

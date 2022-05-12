@@ -1,0 +1,149 @@
+<div class="page-title">
+    <h4>History</h4>
+</div>
+
+<div class="page-subtitle">
+    <h6>Harmonic signal</h6>
+</div>
+<div class="row" *ngIf="harmonicSignals$ | async as harmonicSignals; else loader">
+    <table class="highlight" *ngIf="harmonicSignals.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amplitude</th>
+                <th>Frequency</th>
+                <th>Initial phase</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let harmonicSignal of harmonicSignals">
+                <td>{{ harmonicSignal.id }}</td>
+                <td>{{ harmonicSignal.amplitude }}</td>
+                <td>{{ harmonicSignal.frequency }}</td>
+                <td>{{ harmonicSignal.initial_phase }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/harmonic_signal', harmonicSignal.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteHarmonicSignal(harmonicSignal.id)" *ngIf="harmonicSignal">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="page-subtitle">
+    <h6>Fourier transform</h6>
+</div>
+<div class="row" *ngIf="fourierTransforms$ | async as fourierTransforms; else loader">
+    <table class="highlight" *ngIf="fourierTransforms.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amplitudes</th>
+                <th>Frequencies</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let fourierTransform of fourierTransforms">
+                <td>{{ fourierTransform.id }}</td>
+                <td>{{ fourierTransform.amplitudes }}</td>
+                <td>{{ fourierTransform.frequencies }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/fourier_transform', fourierTransform.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteFourierTransform(fourierTransform.id)" *ngIf="fourierTransform">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="page-subtitle">
+    <h6>Simple correlations</h6>
+</div>
+<div class="row" *ngIf="simpleCorrelations$ | async as simpleCorrelations; else loader">
+    <table class="highlight" *ngIf="simpleCorrelations.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Amplitudes signal 1</th>
+                <th>Frequencies signal 1</th>
+                <th>Amount of points signal 1</th>
+                <th>Amplitudes signal 2</th>
+                <th>Frequencies signal 2</th>
+                <th>Amount of points signal 2</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let simpleCorrelation of simpleCorrelations">
+                <td>{{ simpleCorrelation.id }}</td>
+                <td>{{ simpleCorrelation.amplitudes_signal_1 }}</td>
+                <td>{{ simpleCorrelation.frequencies_signal_1 }}</td>
+                <td>{{ simpleCorrelation.amount_of_points_signal_1 }}</td>
+                <td>{{ simpleCorrelation.amplitudes_signal_2 }}</td>
+                <td>{{ simpleCorrelation.frequencies_signal_2 }}</td>
+                <td>{{ simpleCorrelation.amount_of_points_signal_2 }}</td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/simple_correlation', simpleCorrelation.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteSimpleCorrelation(simpleCorrelation.id)" *ngIf="simpleCorrelation">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="page-subtitle">
+    <h6>Image correlations</h6>
+</div>
+<div class="row" *ngIf="imageCorrelations$ | async as imageCorrelations; else loader">
+    <table class="highlight" *ngIf="imageCorrelations.length !== 0; else empty">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image 1</th>
+                <th>Image 2</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let imageCorrelation of imageCorrelations">
+                <td>{{ imageCorrelation.id }}</td>
+                <td><a href="{{ imageCorrelation.image_1 }}" target="_blank">Image 1</a></td>
+                <td><a href="{{ imageCorrelation.image_2 }}" target="_blank">Image 2</a></td>
+                <td>
+                    <button type="button" class="btn waves-effect wavers-light btn-small" [routerLink]="['/image_correlation', imageCorrelation.id]">View</button>
+                </td>
+                <td>
+                    <button class="btn btn-small red" (click)="deleteImageCorrelation(imageCorrelation.id)" *ngIf="imageCorrelation">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #empty>
+    <div class="center">You don't have any results!</div>
+</ng-template>
+
+<ng-template #loader>
+	<app-loader></app-loader>
+</ng-template>

@@ -1,0 +1,62 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/simple_correlation">Simple correlation</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        View simple correlation (Read-Only mode)
+    </h4>
+    <span>
+        <button class="btn btn-small red" (click)="deleteSimpleCorrelation()" *ngIf="simpleCorrelation">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
+</div>
+
+<div class="row" *ngIf="simpleCorrelation">
+    <div class="col s12 m6 l6">
+        <div class="input-field">
+            <input id="amplitudes_signal_1" type="text" [readOnly]="true" [(ngModel)]="simpleCorrelation.amplitudes_signal_1">
+            <label class="active" for="amplitudes_signal_1">Amplitudes</label>
+        </div>
+        <div class="input-field">
+            <input id="frequencies_signal_1" type="text" [readOnly]="true" [(ngModel)]="simpleCorrelation.frequencies_signal_1">
+            <label class="active" for="frequencies_signal_1">Frequencies</label>
+        </div>
+        <div class="input-field">
+            <input id="amount_of_points_signal_1" type="number" [readOnly]="true" [(ngModel)]="simpleCorrelation.amount_of_points_signal_1">
+            <label class="active" for="amount_of_points_signal_1">Amount of points</label>
+        </div>
+        <div class="col s12 m12 l12">
+            <plotly-plot id="polyharmonicSignal1" *ngIf="((loadStatus == 'SUCCESS') && simpleCorrelationResult) else loader" [data]="plotDataSignal1" [layout]="plotLayoutSignal1"></plotly-plot>
+        </div>
+    </div>
+    <div class="col s12 m6 l6">
+        <div class="input-field">
+            <input id="amplitudes_signal_2" type="text" [readOnly]="true" [(ngModel)]="simpleCorrelation.amplitudes_signal_2">
+            <label class="active" for="amplitudes_signal_2">Amplitudes</label>
+        </div>
+        <div class="input-field">
+            <input id="frequencies_signal_2" type="text" [readOnly]="true" [(ngModel)]="simpleCorrelation.frequencies_signal_2">
+            <label class="active" for="frequencies_signal_2">Frequencies</label>
+        </div>
+        <div class="input-field">
+            <input id="amount_of_points_signal_2" type="number" [readOnly]="true" [(ngModel)]="simpleCorrelation.amount_of_points_signal_2">
+            <label class="active" for="amount_of_points_signal_2">Amount of points</label>
+        </div>
+        <div class="col s12 m12 l12">
+            <plotly-plot id="polyharmonicSignal2" *ngIf="((loadStatus == 'SUCCESS') && simpleCorrelationResult) else loader" [data]="plotDataSignal2" [layout]="plotLayoutSignal2"></plotly-plot>
+        </div>
+    </div>
+    <div class="col s12 m12 l12">
+        <plotly-plot id="polyharmonicResult" *ngIf="((loadStatus == 'SUCCESS') && simpleCorrelationResult) else loader" [data]="plotDataSignalResult" [layout]="plotLayoutSignalResult"></plotly-plot>
+    </div>
+    <div class="col s12 m12 l12">
+        <nouislider *ngIf="((loadStatus == 'SUCCESS') && simpleCorrelationResult) else loader" [connect]="true" [min]="1" [max]="simpleCorrelationResult.correlation.length" [ngModel]="[1, simpleCorrelationResult.correlation.length]" [tooltips]="[true, true]" [step]="1" (ngModelChange)="recalcCorrelationResult($event)"></nouislider>
+    </div>
+</div>
+
+<ng-template #loader>
+    <div class="center">Task is calculating...</div>
+    <br>
+	<app-loader></app-loader>
+</ng-template>
+

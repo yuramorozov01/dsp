@@ -1,0 +1,92 @@
+version: "3.7"
+
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./services/backend/data/redis:/data
+    env_file: ./.env
+
+  worker_calc_task:
+    restart: always
+    build:
+      context: ./services/backend
+    volumes:
+      - ./services/backend:/app/backend/
+    env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "calc_task"]
+    depends_on:
+      - redis
+      - db
+
+  worker_utils:
+    restart: always
+    build:
+      context: ./services/backend
+    volumes:
+      - ./services/backend:/app/backend/
+    env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "worker", "-Q", "utils"]
+    depends_on:
+      - redis
+      - db
+
+  flower:
+    restart: always
+    build:
+      context: ./services/backend
+    ports:
+      - "5555:5555"
+    env_file: ./.env
+    entrypoint: []
+    command: ["celery", "--workdir=./src", "-A", "dsp", "flower"]
+    depends_on:
+      - beat
+      - redis
+      - worker_calc_task
+      - worker_utils
+
+  beat:
+    restart: always
+    build:
+      context: ./services/backend
+    volumes:
+      - ./services/backend:/app/backend/
+    env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "celery", "--workdir=./src", "-A", "dsp", "beat", "-l", "INFO", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
+    depends_on:
+      - redis
+      - db
+
+  backend:
+    restart: always
+    build:
+      context: ./services/backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./services/backend:/app/backend/
+    env_file: ./.env
+    entrypoint: []
+    command: ["./wait-for-it.sh", "db:5432", "--", "./dsp_run.sh"]
+    depends_on:
+      - db
+
+  db:
+    restart: always
+    image: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./services/backend/data/postgres:/var/lib/postgresql/data
+    env_file: ./.env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}

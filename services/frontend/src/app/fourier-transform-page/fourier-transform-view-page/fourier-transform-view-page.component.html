@@ -1,0 +1,51 @@
+<div class="page-title">
+    <h4>
+        <a routerLink="/fourier_transform">Fourier transform</a>
+        <i class="material-icons">keyboard_arrow_right</i>
+        View fourier transform (Read-Only mode)
+    </h4>
+    <span>
+        <button class="btn btn-small red" (click)="deleteFourierTransform()" *ngIf="fourierTransform">
+	    	<i class="material-icons">delete</i>
+		</button>
+    </span>
+</div>
+
+<div class="row" *ngIf="fourierTransform">
+    <div class="col s12 m6 l3">
+        <div class="input-field">
+            <input id="amplitudes" type="text" [readOnly]="true" [(ngModel)]="fourierTransform.amplitudes">
+            <label class="active" for="amplitudes">Amplitudes</label>
+        </div>
+        <div class="input-field">
+            <input id="frequencies" type="text" [readOnly]="true" [(ngModel)]="fourierTransform.frequencies">
+            <label class="active" for="frequencies">Frequencies</label>
+        </div>
+    </div>
+    <div class="col s12 m12 l12">
+        <plotly-plot id="mainPolyharmonic" *ngIf="((loadStatus == 'SUCCESS') && fourierTransformResult) else loader" [data]="plotData" [layout]="plotLayout" [config]=""></plotly-plot>
+    </div>
+    <div class="col s12 m12 l12" *ngIf="((loadStatus == 'SUCCESS') && fourierTransformResult)">
+        <div class="row">
+            <div class="col s4 m4 4 center" *ngFor="let data of plotDataHarmonics; index as i">
+                <plotly-plot [data]="data" [layout]="this.plotLayoutHarmonics[i]"></plotly-plot>
+                <p>
+                    <label>
+                        <input type="checkbox" class="filled-in" value="{{ i }}" (change)="recalcResultPolyharmonic(i, $event)" id="{{ i }}" checked="checked" />
+                        <span>Harmonic signal {{ i }}</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m12 l12">
+        <plotly-plot id="frequencySpectre" *ngIf="((loadStatus == 'SUCCESS') && fourierTransformResult)" [data]="plotDataFrequencySpectre" [layout]="plotLayoutFrequencySpectre"></plotly-plot>
+    </div>
+</div>
+
+<ng-template #loader>
+    <div class="center">Task is calculating...</div>
+    <br>
+	<app-loader></app-loader>
+</ng-template>
+
